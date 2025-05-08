@@ -10,10 +10,12 @@
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
 	<h1>ĐĂNG NHẬP</h1>
-	<form action="">
-		Tên đăng nhập:&emsp;<input type="text"/>
+	<form action="./login" method="post">
+		Tên đăng nhập:&emsp;<input type="text" name="usernameInput"/>
 		<br>
-		Mật khẩu:&emsp;<input type="password"/>
+		Mật khẩu:&emsp;<input type="password" name="passwordInput"/>
+		<br>
+		<button type="submit">Đăng nhập</button>
 	</form>
 
 </body>

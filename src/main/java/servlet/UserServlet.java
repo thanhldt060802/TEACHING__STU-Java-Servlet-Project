@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDAO;
 import model.User;
 
-@WebServlet({ "/login", "/logout", "/register" })
+@WebServlet({ "/login", "/logout", "/register", "/getAllUsers", "/createUser", "/updateUser", "/deleteUser" })
 public class UserServlet extends HttpServlet {
 
 	private UserDAO userDAO;
@@ -32,6 +34,10 @@ public class UserServlet extends HttpServlet {
 		case "/logout":
 			this.handleLogoutHTTPGet(request, response);
 			break;
+			
+		case "/getAllUsers":
+			this.handleGetAllUsersHTTPGet(request, response);
+			break;
 
 		}
 	}
@@ -48,6 +54,14 @@ public class UserServlet extends HttpServlet {
 		System.out.println("Logout success");
 		response.sendRedirect("./home");
 	}
+	
+	private void handleGetAllUsersHTTPGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<User> userList = this.userDAO.getAllUsers();
+		request.setAttribute("userList", userList);
+		
+		request.getRequestDispatcher("./table-user.jsp").forward(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,6 +71,18 @@ public class UserServlet extends HttpServlet {
 
 		case "/login":
 			this.handleLoginHTTPPost(request, response);
+			break;
+			
+		case "/createUser":
+			this.handleCreateUserHTTPPost(request, response);
+			break;
+
+		case "/updateUser":
+			this.handleUpdateUserHTTPPost(request, response);
+			break;
+
+		case "/deleteUser":
+			this.handleDeleteUserHTTPPost(request, response);
 			break;
 
 		}
@@ -84,6 +110,22 @@ public class UserServlet extends HttpServlet {
 		
 		System.out.println("Login success");
 		response.sendRedirect("./product.jsp");
+	}
+	
+	private void handleCreateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("Create");
+		response.getWriter().println("Handling create");
+	}
+	
+	private void handleUpdateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("Update");
+	}
+	
+	private void handleDeleteUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("Delete");
 	}
 
 }

@@ -1,14 +1,44 @@
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import infrastructure.MySQLDB;
 import model.User;
 
 public class UserDAO {
+	
+	public List<User> getAllUsers() {
+		List<User> users = new ArrayList<User>();
+		String sqlGetAllUsers = "SELECT * FROM users";
+		try {
+			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementGetAllUsers = connection.prepareStatement(sqlGetAllUsers);
+			
+			ResultSet rsGetAllUsers = statementGetAllUsers.executeQuery();
+			while (rsGetAllUsers.next()) {
+				User user = new User();
+				user.setId(rsGetAllUsers.getLong("id"));
+				user.setFullName(rsGetAllUsers.getString("full_name"));
+				user.setEmail(rsGetAllUsers.getString("email"));
+				user.setUsername(rsGetAllUsers.getString("username"));
+				user.setHashedPassword(rsGetAllUsers.getString("hashed_password"));
+				user.setAddress(rsGetAllUsers.getString("address"));
+				user.setRoleName(rsGetAllUsers.getString("role_name"));
+				user.setCreatedAt(rsGetAllUsers.getTimestamp("created_at"));
+				user.setUpdatedAt(rsGetAllUsers.getTimestamp("updated_at"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 	
 	public User getUserByUsername(String username) {
 		User foundUser = null;

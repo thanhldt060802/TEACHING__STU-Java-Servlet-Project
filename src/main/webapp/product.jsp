@@ -9,7 +9,7 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>DANH SÁCH PHIM</h1>
+	<h1>DANH SÁCH SẢN PHẨM</h1>
 
 </body>
 </html>

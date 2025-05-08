@@ -10,8 +10,8 @@
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
 	<h1>TRANG CHỦ</h1>
-	<div>Chào mừng bạn đã ghé rạp!</div>
-	<a href="">Chọn phim ngay</a>
+	<div>Chào mừng bạn đã ghé cửa hàng!</div>
+	<a href="">Chọn sản phẩm ngay</a>
 
 </body>
 </html>
