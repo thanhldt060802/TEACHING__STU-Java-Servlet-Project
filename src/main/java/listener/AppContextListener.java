@@ -4,32 +4,17 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-/**
- * Application Lifecycle Listener implementation class AppContextListener
- *
- */
+import infrastructure.MySQLDB;
+
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
-    /**
-     * Default constructor. 
-     */
-    public AppContextListener() {
-        // TODO Auto-generated constructor stub
-    }
+	public void contextDestroyed(ServletContextEvent sce) {
+		MySQLDB.closeConnection();
+	}
 
-	/**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-     */
-    public void contextDestroyed(ServletContextEvent sce)  { 
-         // TODO Auto-generated method stub
-    }
+	public void contextInitialized(ServletContextEvent sce) {
+		MySQLDB.openConnection();
+	}
 
-	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
-     */
-    public void contextInitialized(ServletContextEvent sce)  { 
-         // TODO Auto-generated method stub
-    }
-	
 }
