@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 <div>
-	LỐI TẮT CHUNG:&emsp;&emsp;<a href="">TRANG CHỦ</a>&emsp;/&emsp;<a href="">SẢN PHẨM</a>
+	LỐI TẮT CHUNG:&emsp;&emsp;<a href="./home">TRANG CHỦ</a>&emsp;/&emsp;<a href="./product">SẢN PHẨM</a>
 </div>
 <%
 User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -17,12 +17,12 @@ User loginUser = (User) request.getSession().getAttribute("loginUser");
 	<%
 	} else {
 	%>
-	<a href="">THÔNG TIN TÀI KHOẢN</a>&emsp;/&emsp;<a href="">GIỎ HÀNG</a>&emsp;/&emsp;<a href="">HOÁ ĐƠN</a>&emsp;/&emsp;<a href="./logout">ĐĂNG XUẤT</a>
+	<a href="./myAccount">THÔNG TIN TÀI KHOẢN</a>&emsp;/&emsp;<a href="./myCart">GIỎ HÀNG</a>&emsp;/&emsp;<a href="./myInvoice">HOÁ ĐƠN</a>&emsp;/&emsp;<a href="./logout">ĐĂNG XUẤT</a>
 	<%
 	if (loginUser.getRoleName().equals("ADMIN")) {
 	%>
 	<div>
-		DỮ LIỆU:&emsp;&emsp;<a href="./getAllUsers">NGƯỜI DÙNG</a>&emsp;/&emsp;<a href="">DANH MỤC SẢN PHẨM</a>&emsp;/&emsp;<a href="">SẢN PHẨM</a>&emsp;/&emsp;<a href="">GIỎ HÀNG</a>&emsp;/&emsp;<a href="">HOÁ ĐƠN</a>
+		DỮ LIỆU:&emsp;&emsp;<a href="./getUsers">NGƯỜI DÙNG</a>&emsp;/&emsp;<a href="./getCategories">DANH MỤC SẢN PHẨM</a>&emsp;/&emsp;<a href="./getBrands">DANH MỤC THƯƠNG HIỆU</a>&emsp;/&emsp;<a href="./getProducts">SẢN PHẨM</a>&emsp;/&emsp;<a href="./getCarts">GIỎ HÀNG</a>&emsp;/&emsp;<a href="./getInvoices">HOÁ ĐƠN</a>
 	</div>
 	<%
 	}

@@ -13,7 +13,7 @@ import model.User;
 
 public class UserDAO {
 	
-	public List<User> getAllUsers() {
+	public List<User> getUsers() {
 		List<User> users = new ArrayList<User>();
 		String sqlGetAllUsers = "SELECT * FROM users";
 		try {
@@ -38,6 +38,33 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return users;
+	}
+	
+	public User getUserById(Long id) {
+		User foundUser = null;
+		String sqlGetUserById = "SELECT * FROM users WHERE id = ?";
+		try {
+			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementGetUserById = connection.prepareStatement(sqlGetUserById);
+			statementGetUserById.setLong(1, id);
+			
+			ResultSet rsGetUserById = statementGetUserById.executeQuery();
+			if (rsGetUserById.next()) {
+				foundUser = new User();
+				foundUser.setId(rsGetUserById.getLong("id"));
+				foundUser.setFullName(rsGetUserById.getString("full_name"));
+				foundUser.setEmail(rsGetUserById.getString("email"));
+				foundUser.setUsername(rsGetUserById.getString("username"));
+				foundUser.setHashedPassword(rsGetUserById.getString("hashed_password"));
+				foundUser.setAddress(rsGetUserById.getString("address"));
+				foundUser.setRoleName(rsGetUserById.getString("role_name"));
+				foundUser.setCreatedAt(rsGetUserById.getTimestamp("created_at"));
+				foundUser.setUpdatedAt(rsGetUserById.getTimestamp("updated_at"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return foundUser;
 	}
 	
 	public User getUserByUsername(String username) {

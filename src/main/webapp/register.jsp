@@ -10,7 +10,8 @@
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
 	<h1>ĐĂNG KÝ</h1>
-	<form action="">
+	
+	<form>
 		Họ và tên:&emsp;<input type="text"/>
 		<br>
 		Email:&emsp;<input type="text"/>
@@ -23,9 +24,9 @@
 		<br>
 		Địa chỉ:&emsp;<input type="text"/>
 		<br>
-		<button type="submit">Đăng ký</button>
+		<button>Đăng ký</button>
 		<br>
-		<a href="/login">Đăng nhập</a> / <a href="">Quên mật khẩu</a>
+		<a href="./login">Đăng nhập</a>
 	</form>
 
 </body>

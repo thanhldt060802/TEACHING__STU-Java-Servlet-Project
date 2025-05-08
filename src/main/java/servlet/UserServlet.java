@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDAO;
 import model.User;
 
-@WebServlet({ "/login", "/logout", "/register", "/getAllUsers", "/createUser", "/updateUser", "/deleteUser" })
+@WebServlet({ "/login", "/logout", "/register", "/retrivePassowrd", "/myAccount", "/updateMyAccount", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser" })
 public class UserServlet extends HttpServlet {
 
 	private UserDAO userDAO;
@@ -34,9 +34,13 @@ public class UserServlet extends HttpServlet {
 		case "/logout":
 			this.handleLogoutHTTPGet(request, response);
 			break;
+
+		case "/getUsers":
+			this.handleGetUsersHTTPGet(request, response);
+			break;
 			
-		case "/getAllUsers":
-			this.handleGetAllUsersHTTPGet(request, response);
+		case "/getUserDetail":
+			this.handleGetUserDetailHTTPGet(request, response);
 			break;
 
 		}
@@ -50,17 +54,27 @@ public class UserServlet extends HttpServlet {
 	private void handleLogoutHTTPGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getSession().removeAttribute("loginUser");
-		
+
 		System.out.println("Logout success");
 		response.sendRedirect("./home");
 	}
-	
-	private void handleGetAllUsersHTTPGet(HttpServletRequest request, HttpServletResponse response)
+
+	private void handleGetUsersHTTPGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<User> userList = this.userDAO.getAllUsers();
+		List<User> userList = this.userDAO.getUsers();
 		request.setAttribute("userList", userList);
-		
+
 		request.getRequestDispatcher("./table-user.jsp").forward(request, response);
+	}
+	
+	private void handleGetUserDetailHTTPGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Long id = Long.parseLong(request.getParameter("id"));
+		
+		User foundUser = this.userDAO.getUserById(id);
+		request.setAttribute("foundUser", foundUser);
+
+		request.getRequestDispatcher("./modify-user.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -72,7 +86,7 @@ public class UserServlet extends HttpServlet {
 		case "/login":
 			this.handleLoginHTTPPost(request, response);
 			break;
-			
+
 		case "/createUser":
 			this.handleCreateUserHTTPPost(request, response);
 			break;
@@ -92,6 +106,8 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String username = request.getParameter("usernameInput");
 		String password = request.getParameter("passwordInput");
+		
+		System.out.println(username);
 
 		User loginUser = this.userDAO.getUserByUsername(username);
 		if (loginUser == null) {
@@ -99,30 +115,29 @@ public class UserServlet extends HttpServlet {
 			response.sendRedirect("./login");
 			return;
 		}
-		
+
 		if (!password.equals(loginUser.getHashedPassword())) {
 			System.out.println("Password of user does not match");
 			response.sendRedirect("./login");
 			return;
 		}
-		
+
 		request.getSession().setAttribute("loginUser", loginUser);
-		
+
 		System.out.println("Login success");
-		response.sendRedirect("./product.jsp");
+		response.sendRedirect("./home");
 	}
-	
+
 	private void handleCreateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Create");
-		response.getWriter().println("Handling create");
 	}
-	
+
 	private void handleUpdateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Update");
 	}
-	
+
 	private void handleDeleteUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Delete");
