@@ -8,7 +8,8 @@ CREATE TABLE users (
     address VARCHAR(255) NOT NULL,
     role_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_cart_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 INSERT INTO users (full_name, email, username, hashed_password, address, role_name, created_at) VALUES
 ('Lê Minh Quân', 'leminhquan01@example.com', 'leminhquan01', '123', '123 Lê Lợi, Hà Nội', 'ADMIN', '2024-01-05 09:00:00'), -- id: 1
@@ -91,30 +92,14 @@ INSERT INTO products (name, description, sex, price, discount_percentage, stock,
 ('Giày thể thao Uniqlo', 'Giày thể thao Uniqlo bền và nhẹ.', 'UNISEX', 475389, 22, 67, 'https://example.com/images/50.jpg', 6, 2, '2024-08-15 00:00:00'), -- id: 23
 ('Váy đầm liền thân', 'Váy đầm liền thân thanh lịch cho cô nàng công sở.', 'FEMALE', 299999, 15, 49, 'https://example.com/images/41.jpg', 6, 5, '2024-07-28 00:00:00'); -- id: 24
 
--- Bảng giỏ hàng
-CREATE TABLE carts (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL REFERENCES users(id),
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-INSERT INTO carts(user_id, created_at) VALUES
-(1, '2024-01-01 10:00:00'), -- id: 1
-(2, '2024-01-02 11:15:00'), -- id: 2
-(3, '2024-01-03 12:30:00'), -- id: 3
-(4, '2024-01-04 13:45:00'), -- id: 4
-(5, '2024-01-05 14:00:00'), -- id: 5
-(6, '2024-01-06 15:10:00'), -- id: 6
-(7, '2024-01-07 16:20:00'); -- id: 7
-
 -- Bảng chi tiết mặt hàng trong giỏ hàng
 CREATE TABLE cart_items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cart_id BIGINT NOT NULL REFERENCES carts(id),
+    user_id BIGINT NOT NULL REFERENCES users(id),
     product_id BIGINT NOT NULL REFERENCES products(id),
     quantity INT NOT NULL
 );
-INSERT INTO cart_items(cart_id, product_id, quantity) VALUES
+INSERT INTO cart_items(user_id, product_id, quantity) VALUES
 (2, 1, 2), -- id: 1
 (2, 2, 1), -- id: 2
 (2, 3, 3), -- id: 3
