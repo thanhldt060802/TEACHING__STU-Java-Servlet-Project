@@ -8,8 +8,7 @@ CREATE TABLE users (
     address VARCHAR(255) NOT NULL,
     role_name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_cart_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 INSERT INTO users (full_name, email, username, hashed_password, address, role_name, created_at) VALUES
 ('Lê Minh Quân', 'leminhquan01@example.com', 'leminhquan01', '123', '123 Lê Lợi, Hà Nội', 'ADMIN', '2024-01-05 09:00:00'), -- id: 1
