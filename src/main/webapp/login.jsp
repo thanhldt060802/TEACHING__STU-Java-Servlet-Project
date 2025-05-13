@@ -12,9 +12,9 @@
 	<h1>ĐĂNG NHẬP</h1>
 	
 	<form id="simple-form" enctype="application/x-www-form-urlencoded">
-		Tên đăng nhập:&emsp;<input id="username" type="text"/>
+		Tên đăng nhập:&emsp;<input id="username" type="text" required="required"/>
 		<br>
-		Mật khẩu:&emsp;<input id="password" type="password"/>
+		Mật khẩu:&emsp;<input id="password" type="password" required="required"/>
 		<br>
 		<button type="button" onclick="submitForm('./login')">Đăng nhập</button>
 		<br>
@@ -37,6 +37,11 @@
 		        },
 		        body: params.toString()
 		    })
+		    .then(response => {
+	            if(response.redirected) {
+	                window.location.href = response.url;
+	            }
+        	})
 		    .catch(error => {
 		        console.error("Lỗi:", error);
 		        alert("Đã xảy ra lỗi khi gửi dữ liệu.");

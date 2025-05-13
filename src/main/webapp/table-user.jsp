@@ -35,7 +35,7 @@
 			<td><%= user.getEmail() %></td>
 			<td><%= user.getUsername() %></td>
 			<td><%= user.getRoleName() %></td>
-			<td><a href="./getUserDetail?id=<%= user.getId() %>">Chỉnh sửa</a></td>
+			<td><a href="./getUserDetail?id=<%= user.getId() %>">Chỉnh sửa</a>&emsp;<a href="./deleteUser?id=<%= user.getId() %>">Xoá</a></td>
 		</tr>
 		<%
 		}
@@ -44,12 +44,19 @@
 		
 	<br>
 	
-	<form>
+	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
 		Họ và tên:&emsp;<input id="full-name" type="text"/>
 		<br>
 		Email:&emsp;<input id="email" type="text"/>
 		<br>
 		Tên đăng nhập:&emsp;<input id="username" type="text"/>
+		<br>
+		Mật khẩu:&emsp;<input id="password" type="text"/>
+		<br>
+		Vai trò:&emsp;<select id="role-name">
+		    <option value="ADMIN">ADMIN</option>
+		    <option value="CUSTOMER">CUSTOMER</option>
+		</select>
 		<br>
 		Địa chỉ:&emsp;<input id="address" type="text"/>
 		<br>
@@ -59,14 +66,42 @@
 	
 	<script>
 		function submitForm(action) {
+			const form = document.getElementById("simple-form");
 			
+		    const params = new URLSearchParams();
+		    params.append("action", action);
+		    params.append("fullNameInput", document.getElementById("full-name").value);
+		    params.append("emailInput", document.getElementById("email").value);
+		    params.append("usernameInput", document.getElementById("username").value);
+		    params.append("passwordInput", document.getElementById("password").value);
+		    params.append("addressInput", document.getElementById("address").value);
+		    params.append("roleNameInput", document.getElementById("role-name").value);
+	
+		    fetch(action, {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+		        },
+		        body: params.toString()
+		    })
+		    .then(response => {
+	            if(response.redirected) {
+	                window.location.href = response.url;
+	            }
+        	})
+		    .catch(error => {
+		        console.error("Lỗi:", error);
+		        alert("Đã xảy ra lỗi khi gửi dữ liệu.");
+		    });
 		}
 		
 		function resetForm() {
 		    document.getElementById("full-name").value = "";
 		    document.getElementById("email").value = "";
 		    document.getElementById("username").value = "";
+		    document.getElementById("password").value = "";
 		    document.getElementById("address").value = "";
+		    document.getElementById("role-name").value = "ADMIN";
 		}
 	</script>
 

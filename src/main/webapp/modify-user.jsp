@@ -17,7 +17,7 @@
 	User foundUser = (User)request.getAttribute("foundUser");
 	%>
 		
-	<form>
+	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
 		Id:&emsp;<input id="id" type="text" value="<%= foundUser.getId() %>" readonly="readonly"/>
 		<br>
 		Họ và tên:&emsp;<input id="full-name" type="text" value="<%= foundUser.getFullName() %>"/>
@@ -28,13 +28,52 @@
 		<br>
 		Địa chỉ:&emsp;<input id="address" type="text" value="<%= foundUser.getAddress() %>"/>
 		<br>
+		Vai trò:&emsp;<select id="role-name">
+		    <option value="ADMIN" <%=foundUser.getRoleName().equals("ADMIN") ? "selected" : "" %>>ADMIN</option>
+		    <option value="CUSTOMER" <%=foundUser.getRoleName().equals("CUSTOMER") ? "selected" : "" %>>CUSTOMER</option>
+		</select>
+		<br>
 		<button type="button" onclick="submitForm('./updateUser')">Cập nhật</button>
-		<button type="button" onclick="submitForm('./deleteUser')">Xoá</button>
+		<button type="button" onclick="deleteById('<%= foundUser.getId()%>')">Xoá</button>
+		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
 	<script>
 		function submitForm(action) {
+			const form = document.getElementById("simple-form");
 			
+			const params = new URLSearchParams();
+		    params.append("action", action);
+		    params.append("idInput", document.getElementById("id").value);
+		    params.append("fullNameInput", document.getElementById("full-name").value);
+		    params.append("emailInput", document.getElementById("email").value);
+		    params.append("addressInput", document.getElementById("address").value);
+		    params.append("roleNameInput", document.getElementById("role-name").value);
+	
+		    fetch(action, {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+		        },
+		        body: params.toString()
+		    })
+		    .then(response => {
+	            if(response.redirected) {
+	                window.location.href = response.url;
+	            }
+        	})
+		    .catch(error => {
+		        console.error("Lỗi:", error);
+		        alert("Đã xảy ra lỗi khi gửi dữ liệu.");
+		    });
+		}
+		
+		function deleteById(id) {
+			window.location.href = "./deleteUser?id=" + id
+		}
+		
+		function resetForm() {
+			location.reload();
 		}
 	</script>
 

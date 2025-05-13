@@ -93,5 +93,87 @@ public class UserDAO {
 		}
 		return foundUser;
 	}
+	
+	public User getUserByEmail(String email) {
+		User foundUser = null;
+		String sqlGetUserByUsername = "SELECT * FROM users WHERE email = ?";
+		try {
+			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementGetUserByUsername = connection.prepareStatement(sqlGetUserByUsername);
+			statementGetUserByUsername.setString(1, email);
+			
+			ResultSet rsGetUserByUsername = statementGetUserByUsername.executeQuery();
+			if (rsGetUserByUsername.next()) {
+				foundUser = new User();
+				foundUser.setId(rsGetUserByUsername.getLong("id"));
+				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
+				foundUser.setEmail(rsGetUserByUsername.getString("email"));
+				foundUser.setUsername(rsGetUserByUsername.getString("username"));
+				foundUser.setHashedPassword(rsGetUserByUsername.getString("hashed_password"));
+				foundUser.setAddress(rsGetUserByUsername.getString("address"));
+				foundUser.setRoleName(rsGetUserByUsername.getString("role_name"));
+				foundUser.setCreatedAt(rsGetUserByUsername.getTimestamp("created_at"));
+				foundUser.setUpdatedAt(rsGetUserByUsername.getTimestamp("updated_at"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return foundUser;
+	}
+	
+	public boolean createUser(User newUser) {
+		String sqlInsertUser = "INSERT INTO users(full_name, email, username, hashed_password, address, role_name) VALUES (?, ?, ?, ?, ?, ?)";
+		try {
+			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementInsertUser = connection.prepareStatement(sqlInsertUser);
+			statementInsertUser.setString(1, newUser.getFullName());
+			statementInsertUser.setString(2, newUser.getEmail());
+			statementInsertUser.setString(3, newUser.getUsername());
+			statementInsertUser.setString(4, newUser.getHashedPassword());
+			statementInsertUser.setString(5, newUser.getAddress());
+			statementInsertUser.setString(6, newUser.getRoleName());
+
+			statementInsertUser.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean updateUser(User updatedUser) {
+		String sqlUpdateUser = "UPDATE users SET full_name = ?, email = ?, hashed_password = ?, address = ?, role_name = ? WHERE id = ?";
+        try {
+        	Connection connection = MySQLDB.getConnection();
+            PreparedStatement statementUpdateUser = connection.prepareStatement(sqlUpdateUser);
+            statementUpdateUser.setString(1, updatedUser.getFullName());
+            statementUpdateUser.setString(2, updatedUser.getEmail());
+            statementUpdateUser.setString(3, updatedUser.getHashedPassword());
+            statementUpdateUser.setString(4, updatedUser.getAddress());
+            statementUpdateUser.setString(5, updatedUser.getRoleName());
+            statementUpdateUser.setLong(6, updatedUser.getId());
+
+            statementUpdateUser.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+	}
+	
+	public boolean deleteUser(Long id) {
+		String sqlDeleteUser = "DELETE FROM users WHERE id = ?";
+        try {
+        	Connection connection = MySQLDB.getConnection();
+            PreparedStatement statementDeleteUser = connection.prepareStatement(sqlDeleteUser);
+            statementDeleteUser.setLong(1, id);
+            
+            statementDeleteUser.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+	}
 
 }
