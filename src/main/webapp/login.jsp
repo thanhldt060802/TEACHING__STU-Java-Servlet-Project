@@ -12,25 +12,24 @@
 	<h1>ĐĂNG NHẬP</h1>
 	
 	<form id="simple-form" enctype="application/x-www-form-urlencoded">
-		Tên đăng nhập:&emsp;<input id="username" type="text" required="required"/>
+		Tên đăng nhập:&emsp;<input id="username" type="text"/>
 		<br>
-		Mật khẩu:&emsp;<input id="password" type="password" required="required"/>
+		Mật khẩu:&emsp;<input id="password" type="password"/>
 		<br>
-		<button type="button" onclick="submitForm('./login')">Đăng nhập</button>
+		<button type="button" onclick="submitFormLogin()">Đăng nhập</button>
 		<br>
 		<a href="./register">Đăng ký</a>&emsp;/&emsp;<a href="./retrievePassword">Quên mật khẩu</a>
 	</form>
 	
 	<script>
-		function submitForm(action) {
+		function submitFormLogin() {
 		    const form = document.getElementById("simple-form");
 
 		    const params = new URLSearchParams();
-		    params.append("action", action);
 		    params.append("usernameInput", document.getElementById("username").value);
 		    params.append("passwordInput", document.getElementById("password").value);
 	
-		    fetch(action, {
+		    fetch("./login", {
 		        method: "POST",
 		        headers: {
 		            "Content-Type": "application/x-www-form-urlencoded"

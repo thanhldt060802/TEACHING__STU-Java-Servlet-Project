@@ -10,16 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.UserDAO;
+import handler.UserServletHandleGet;
+import handler.UserServletHandlePost;
 import model.User;
 
-@WebServlet({ "/login", "/logout", "/register", "/retrivePassowrd", "/myAccount", "/updateMyAccount", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser" })
+@WebServlet({ "/login", "/logout", "/register", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser", "/myAccount", "/updateMyAccount", "/retrivePassowrd" })
 public class UserServlet extends HttpServlet {
 
-	private UserDAO userDAO;
-
-	public UserServlet() {
-		this.userDAO = new UserDAO();
-	}
+	private UserServletHandleGet handleGet;
+	private UserServletHandlePost handlePost;
+	
+	private static final String LOGIN_PATTERN = "/login";  // GET & POST
+	private static final String LOGOUT_PATTERN = "/logout";  // GET
+	private static final String REGISTER_PATTERN = "/register";  // GET & POST
+	private static final String GET_USERS_PATTERN = "/getUsers";  // GET
+	private static final String GET_USER_DETAIL_PATTERN = "/getUserDetail";  // GET
+	private static final String CREATE_USER_PATTERN = "/createUser";  // GET & POST
+	private static final String UPDATE_USER_PATTERN = "/updateUser";  // GET & POST
+	private static final String DELETE_USER_PATTERN = "/deleteUser";  // GET
+	private static final String MY_ACCOUNT_PATTERN = "/myAccount";  // GET
+	private static final String UPDATE_MY_ACCOUNT_PATTERN = "/updateMyAccount";  // GET & POST
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,81 +37,47 @@ public class UserServlet extends HttpServlet {
 
 		switch (route) {
 
-		case "/login":
-			this.handleLoginHTTPGet(request, response);
+		case LOGIN_PATTERN:
+			this.handleGet.handleLogin(request, response);
 			break;
 
-		case "/logout":
-			this.handleLogoutHTTPGet(request, response);
+		case LOGOUT_PATTERN:
+			this.handleGet.handleLogout(request, response);
 			break;
 			
-		case "/register":
-			this.handleRegisterHTTPGet(request, response);
+		case REGISTER_PATTERN:
+			this.handleGet.handleRegister(request, response);
 			break;
 
-		case "/getUsers":
-			this.handleGetUsersHTTPGet(request, response);
+		case GET_USERS_PATTERN:
+			this.handleGet.handleGetUsers(request, response);
 			break;
 			
-		case "/getUserDetail":
-			this.handleGetUserDetailHTTPGet(request, response);
+		case GET_USER_DETAIL_PATTERN:
+			this.handleGet.handleGetUserDetail(request, response);
 			break;
 			
-		case "/deleteUser":
-			this.handleDeleteUserHTTPGet(request, response);
+		case CREATE_USER_PATTERN:
+			this.handleGet.handleCreateUser(request, response);
+			break;
+			
+		case UPDATE_USER_PATTERN:
+			this.handleGet.handleUpdateUser(request, response);
+			break;
+			
+		case DELETE_USER_PATTERN:
+			this.handleGet.handleDeleteUser(request, response);
+			break;
+			
+		case MY_ACCOUNT_PATTERN:
+			// Implementation ...
+			break;
+			
+		case UPDATE_MY_ACCOUNT_PATTERN:
+			// Implementation ...
 			break;
 
 		}
-	}
-
-	private void handleLoginHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("./login.jsp").forward(request, response);
-	}
-
-	private void handleLogoutHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getSession().removeAttribute("loginUser");
-
-		System.out.println("Logout success");
-		response.sendRedirect("./home");
-	}
-	
-	private void handleRegisterHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("./register.jsp").forward(request, response);
-	}
-
-	private void handleGetUsersHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<User> userList = this.userDAO.getUsers();
-		request.setAttribute("userList", userList);
-
-		request.getRequestDispatcher("./table-user.jsp").forward(request, response);
-	}
-	
-	private void handleGetUserDetailHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Long id = Long.parseLong(request.getParameter("id"));
-		
-		User foundUser = this.userDAO.getUserById(id);
-		request.setAttribute("foundUser", foundUser);
-
-		request.getRequestDispatcher("./modify-user.jsp").forward(request, response);
-	}
-	
-	private void handleDeleteUserHTTPGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Long id = Long.parseLong(request.getParameter("id"));
-		
-		if(!this.userDAO.deleteUser(id)) {
-			System.out.println("Delete user failed");
-			response.sendRedirect("./getUserDetail?id=" + id);
-			return;
-		}
-		
-		System.out.println("Delete user successful");
-		response.sendRedirect("./getUsers");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -110,153 +86,29 @@ public class UserServlet extends HttpServlet {
 
 		switch (route) {
 
-		case "/login":
-			this.handleLoginHTTPPost(request, response);
+		case LOGIN_PATTERN:
+			this.handlePost.handleLogin(request, response);
 			break;
 			
-		case "/register":
-			this.handleRegisterHTTPPost(request, response);
+		case REGISTER_PATTERN:
+			this.handlePost.handleRegister(request, response);
 			break;
-
-		case "/createUser":
-			this.handleCreateUserHTTPPost(request, response);
+			
+		case CREATE_USER_PATTERN:
+			this.handlePost.handleCreateUser(request, response);
 			break;
-
-		case "/updateUser":
-			this.handleUpdateUserHTTPPost(request, response);
+			
+		case UPDATE_USER_PATTERN:
+			this.handlePost.handleUpdateUser(request, response);
 			break;
-
+			
+		case UPDATE_MY_ACCOUNT_PATTERN:
+			// Implementation ...
+			break;
+			
 		}
 	}
 
-	private void handleLoginHTTPPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String username = request.getParameter("usernameInput");
-		String password = request.getParameter("passwordInput");
-		
-		User loginUser = this.userDAO.getUserByUsername(username);
-		if (loginUser == null) {
-			System.out.println("Username of user is not valid");
-			response.sendRedirect("./login");
-			return;
-		}
-
-		if (!password.equals(loginUser.getHashedPassword())) {
-			System.out.println("Password of user does not match");
-			response.sendRedirect("./login");
-			return;
-		}
-
-		request.getSession().setAttribute("loginUser", loginUser);
-
-		System.out.println("Login success");
-		response.sendRedirect("./home");
-	}
 	
-	private void handleRegisterHTTPPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String fullName = request.getParameter("fullNameInput");
-		String email = request.getParameter("emailInput");
-		String username = request.getParameter("usernameInput");
-		String password = request.getParameter("passwordInput");
-		String address = request.getParameter("addressInput");
-		
-		if(this.userDAO.getUserByUsername(username) != null) {
-			System.out.println("Username of user is already exists");
-			response.sendRedirect("./register");
-			return;
-		}
-		
-		if(this.userDAO.getUserByEmail(email) != null) {
-			System.out.println("Email of user is already exists");
-			response.sendRedirect("./register");
-			return;
-		}
-		
-		User newUser = new User();
-		newUser.setFullName(fullName);
-		newUser.setEmail(email);
-		newUser.setUsername(username);
-		newUser.setHashedPassword(password);
-		newUser.setAddress(address);
-		newUser.setRoleName("CUSTOMER");
-		if(!this.userDAO.createUser(newUser)) {
-			System.out.println("Register failed");
-			response.sendRedirect("./register");
-			return;
-		}
-		
-		System.out.println("Register success");
-		response.sendRedirect("./login");
-	}
-
-	private void handleCreateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String fullName = request.getParameter("fullNameInput");
-		String email = request.getParameter("emailInput");
-		String username = request.getParameter("usernameInput");
-		String password = request.getParameter("passwordInput");
-		String address = request.getParameter("addressInput");
-		String roleName = request.getParameter("roleNameInput");
-		
-		if(this.userDAO.getUserByUsername(username) != null) {
-			System.out.println("Username of user is already exists");
-			response.sendRedirect("./getUsers");
-			return;
-		}
-		
-		if(this.userDAO.getUserByEmail(email) != null) {
-			System.out.println("Email of user is already exists");
-			response.sendRedirect("./getUsers");
-			return;
-		}
-		
-		User newUser = new User();
-		newUser.setFullName(fullName);
-		newUser.setEmail(email);
-		newUser.setUsername(username);
-		newUser.setHashedPassword(password);
-		newUser.setAddress(address);
-		newUser.setRoleName(roleName);
-		if(!this.userDAO.createUser(newUser)) {
-			System.out.println("Create user failed");
-			response.sendRedirect("./getUsers");
-			return;
-		}
-		
-		System.out.println("Create user successful");
-		response.sendRedirect("./getUsers");
-	}
-
-	private void handleUpdateUserHTTPPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Long id = Long.parseLong(request.getParameter("idInput"));
-		String fullName = request.getParameter("fullNameInput");
-		String email = request.getParameter("emailInput");
-		String address = request.getParameter("addressInput");
-		String roleName = request.getParameter("roleNameInput");
-		
-		User foundUser = this.userDAO.getUserById(id);
-		foundUser.setFullName(fullName);
-		if(!foundUser.getEmail().equals(email)) {
-			if(this.userDAO.getUserByEmail(email) != null) {
-				System.out.println("Email of user is already exists");
-				response.sendRedirect("./getUserDetail?id=" + id);
-				return;
-			}else {
-				foundUser.setEmail(email);
-			}
-		}
-		foundUser.setAddress(address);
-		foundUser.setRoleName(roleName);
-		if(!this.userDAO.updateUser(foundUser)) {
-			System.out.println("Update user failed");
-			response.sendRedirect("./getUserDetail?id=" + id);
-			return;
-		}
-		
-		System.out.println("Update user successful");
-		response.sendRedirect("./getUserDetail?id=" + id);
-	}
 
 }

@@ -12,36 +12,35 @@
 	<h1>ĐĂNG KÝ</h1>
 	
 	<form>
-		Họ và tên:&emsp;<input id="full-name" type="text" required="required"/>
+		Họ và tên:&emsp;<input id="full-name" type="text"/>
 		<br>
-		Email:&emsp;<input id="email" type="text" required="required"/>
+		Email:&emsp;<input id="email" type="text"/>
 		<br>
-		Tên đăng nhập:&emsp;<input id="username" type="text" required="required"/>
+		Tên đăng nhập:&emsp;<input id="username" type="text"/>
 		<br>
-		Mật khẩu:&emsp;<input id="password" type="password" required="required"/>
+		Mật khẩu:&emsp;<input id="password" type="password"/>
 		<br>
-		Nhập lại mật khẩu:&emsp;<input id="re-password" type="password" required="required"/>
+		Nhập lại mật khẩu:&emsp;<input id="re-password" type="password"/>
 		<br>
-		Địa chỉ:&emsp;<input id="address" type="text" required="required"/>
+		Địa chỉ:&emsp;<input id="address" type="text"/>
 		<br>
-		<button type="button" onclick="submitForm('./register')">Đăng ký</button>
+		<button type="button" onclick="submitFormRegister()">Đăng ký</button>
 		<br>
 		<a href="./login">Đăng nhập</a>
 	</form>
 	
 	<script>
-		function submitForm(action) {
+		function submitFormRegister() {
 		    const form = document.getElementById("simple-form");
 
 		    const params = new URLSearchParams();
-		    params.append("action", action);
 		    params.append("fullNameInput", document.getElementById("full-name").value);
 		    params.append("emailInput", document.getElementById("email").value);
 		    params.append("usernameInput", document.getElementById("username").value);
 		    params.append("passwordInput", document.getElementById("password").value);
 		    params.append("addressInput", document.getElementById("address").value);
 	
-		    fetch(action, {
+		    fetch("./register", {
 		        method: "POST",
 		        headers: {
 		            "Content-Type": "application/x-www-form-urlencoded"

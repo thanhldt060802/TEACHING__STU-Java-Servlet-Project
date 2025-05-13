@@ -60,16 +60,15 @@
 		<br>
 		Địa chỉ:&emsp;<input id="address" type="text"/>
 		<br>
-		<button type="button" onclick="submitForm('./createUser')">Tạo mới</button>
+		<button type="button" onclick="submitFormCreateUser()">Tạo mới</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
 	<script>
-		function submitForm(action) {
+		function submitFormCreateUser() {
 			const form = document.getElementById("simple-form");
 			
 		    const params = new URLSearchParams();
-		    params.append("action", action);
 		    params.append("fullNameInput", document.getElementById("full-name").value);
 		    params.append("emailInput", document.getElementById("email").value);
 		    params.append("usernameInput", document.getElementById("username").value);
@@ -77,7 +76,7 @@
 		    params.append("addressInput", document.getElementById("address").value);
 		    params.append("roleNameInput", document.getElementById("role-name").value);
 	
-		    fetch(action, {
+		    fetch("./createUser", {
 		        method: "POST",
 		        headers: {
 		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
