@@ -1,0 +1,27 @@
+# Eclipse specific
+.project
+.classpath
+.settings/
+
+# Maven build directory
+target/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Others
+.idea/
+*.iml
+
+# Local environment files
+.env

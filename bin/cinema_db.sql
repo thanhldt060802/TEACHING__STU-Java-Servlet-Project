@@ -15,7 +15,6 @@ CREATE TABLE users (
 CREATE TABLE movies (
     movie_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
-    image TEXT NOT NULL,
     genre VARCHAR(50) NOT NULL,
     duration INT NOT NULL, -- in minutes
     release_date_at DATE NOT NULL
@@ -44,7 +43,6 @@ CREATE TABLE seats (
     show_id BIGINT NOT NULL,
     seat_number VARCHAR(10) NOT NULL,
     price BIGINT NOT NULL,
-    discount INT NOT NULL,
     FOREIGN KEY (show_id) REFERENCES shows(show_id)
 );
 
@@ -75,26 +73,13 @@ CREATE TABLE tickets (
     FOREIGN KEY (seat_id) REFERENCES seats(seat_id)
 );
 
--- Vé - chi tiết chỗ ngồi
-CREATE TABLE ticket_seats (
-    ticket_seat_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    ticket_id BIGINT NOT NULL,
-    seat_id BIGINT NOT NULL,
-    price BIGINT NOT NULL,
-    discount INT NOT NULL,
-    FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id),
-    FOREIGN KEY (seat_id) REFERENCES seats(seat_id)
-);
-
--- Vé - chi tiết sản phẩm
-CREATE TABLE ticket_products (
-    ticket_product_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+-- Chi tiết vé
+CREATE TABLE ticket_details (
+    ticket_detail_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ticket_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
     price BIGINT NOT NULL,
     discount INT NOT NULL,
     quantity INT NOT NULL,
-    total_price BIGINT NOT NULL,
-    FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id),
-    FOREIGN KEY (product_id) REFERENCES seats(product_id)
+    total_price BIGINT NOT NULL
 );

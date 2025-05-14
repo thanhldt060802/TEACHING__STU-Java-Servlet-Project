@@ -26,6 +26,8 @@
 		<br>
 		Tên đăng nhập:&emsp;<input id="username" type="text"  value="<%= foundUser.getUsername() %>" readonly="readonly"/>
 		<br>
+		Địa chỉ:&emsp;<input id="address" type="text" value="<%= foundUser.getAddress() %>"/>
+		<br>
 		Vai trò:&emsp;<select id="role-name">
 		    <option value="ADMIN" <%=foundUser.getRoleName().equals("ADMIN") ? "selected" : "" %>>ADMIN</option>
 		    <option value="CUSTOMER" <%=foundUser.getRoleName().equals("CUSTOMER") ? "selected" : "" %>>CUSTOMER</option>
@@ -44,6 +46,7 @@
 		    params.append("idInput", document.getElementById("id").value);
 		    params.append("fullNameInput", document.getElementById("full-name").value);
 		    params.append("emailInput", document.getElementById("email").value);
+		    params.append("addressInput", document.getElementById("address").value);
 		    params.append("roleNameInput", document.getElementById("role-name").value);
 	
 		    fetch("./updateUser", {

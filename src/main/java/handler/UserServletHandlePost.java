@@ -29,7 +29,7 @@ public class UserServletHandlePost {
 			return;
 		}
 
-		if (!password.equals(loginUser.getHashedPassword())) {
+		if (!password.equals(loginUser.getPassword())) {
 			System.out.println("Password of user does not match");
 			response.sendRedirect("./login");
 			return;
@@ -47,7 +47,6 @@ public class UserServletHandlePost {
 		String email = request.getParameter("emailInput");
 		String username = request.getParameter("usernameInput");
 		String password = request.getParameter("passwordInput");
-		String address = request.getParameter("addressInput");
 		
 		if(this.userDAO.getUserByUsername(username) != null) {
 			System.out.println("Username of user is already exists");
@@ -65,8 +64,7 @@ public class UserServletHandlePost {
 		newUser.setFullName(fullName);
 		newUser.setEmail(email);
 		newUser.setUsername(username);
-		newUser.setHashedPassword(password);
-		newUser.setAddress(address);
+		newUser.setPassword(password);
 		newUser.setRoleName("CUSTOMER");
 		if(!this.userDAO.createUser(newUser)) {
 			System.out.println("Register failed");
@@ -84,7 +82,6 @@ public class UserServletHandlePost {
 		String email = request.getParameter("emailInput");
 		String username = request.getParameter("usernameInput");
 		String password = request.getParameter("passwordInput");
-		String address = request.getParameter("addressInput");
 		String roleName = request.getParameter("roleNameInput");
 		
 		if(this.userDAO.getUserByUsername(username) != null) {
@@ -103,8 +100,7 @@ public class UserServletHandlePost {
 		newUser.setFullName(fullName);
 		newUser.setEmail(email);
 		newUser.setUsername(username);
-		newUser.setHashedPassword(password);
-		newUser.setAddress(address);
+		newUser.setPassword(password);
 		newUser.setRoleName(roleName);
 		if(!this.userDAO.createUser(newUser)) {
 			System.out.println("Create user failed");
@@ -121,7 +117,6 @@ public class UserServletHandlePost {
 		Long id = Long.parseLong(request.getParameter("idInput"));
 		String fullName = request.getParameter("fullNameInput");
 		String email = request.getParameter("emailInput");
-		String address = request.getParameter("addressInput");
 		String roleName = request.getParameter("roleNameInput");
 		
 		User foundUser = this.userDAO.getUserById(id);
@@ -135,7 +130,6 @@ public class UserServletHandlePost {
 				foundUser.setEmail(email);
 			}
 		}
-		foundUser.setAddress(address);
 		foundUser.setRoleName(roleName);
 		if(!this.userDAO.updateUser(foundUser)) {
 			System.out.println("Update user failed");

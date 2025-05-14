@@ -11,7 +11,7 @@
 	<jsp:include page="./partial/header.jsp"></jsp:include>
 	<h1>ĐĂNG KÝ</h1>
 	
-	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
+	<form>
 		Họ và tên:&emsp;<input id="full-name" type="text"/>
 		<br>
 		Email:&emsp;<input id="email" type="text"/>
@@ -21,6 +21,8 @@
 		Mật khẩu:&emsp;<input id="password" type="password"/>
 		<br>
 		Nhập lại mật khẩu:&emsp;<input id="re-password" type="password"/>
+		<br>
+		Địa chỉ:&emsp;<input id="address" type="text"/>
 		<br>
 		<button type="button" onclick="submitFormRegister()">Đăng ký</button>
 		<br>
@@ -36,11 +38,12 @@
 		    params.append("emailInput", document.getElementById("email").value);
 		    params.append("usernameInput", document.getElementById("username").value);
 		    params.append("passwordInput", document.getElementById("password").value);
+		    params.append("addressInput", document.getElementById("address").value);
 	
 		    fetch("./register", {
 		        method: "POST",
 		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+		            "Content-Type": "application/x-www-form-urlencoded"
 		        },
 		        body: params.toString()
 		    })

@@ -30,6 +30,8 @@
 		<br>
 		Nhập lại mật khẩu mới:&emsp;<input id="re-new-password" type="password"/>
 		<br>
+		Địa chỉ:&emsp;<input id="address" type="text" value="<%= loginUser.getAddress() %>"/>
+		<br>
 		<button type="button" onclick="submitFormUpdateMyAccount()">Cập nhật</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>

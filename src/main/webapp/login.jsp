@@ -11,7 +11,7 @@
 	<jsp:include page="./partial/header.jsp"></jsp:include>
 	<h1>ĐĂNG NHẬP</h1>
 	
-	<form id="simple-form" enctype="application/x-www-form-urlencoded">
+	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
 		Tên đăng nhập:&emsp;<input id="username" type="text"/>
 		<br>
 		Mật khẩu:&emsp;<input id="password" type="password"/>
@@ -32,7 +32,7 @@
 		    fetch("./login", {
 		        method: "POST",
 		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded"
+		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
 		        },
 		        body: params.toString()
 		    })

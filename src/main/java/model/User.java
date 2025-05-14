@@ -8,26 +8,19 @@ public class User {
 	private String fullName;
 	private String email;
 	private String username;
-	private String hashedPassword;
-	private String address;
+	private String password;
 	private String roleName;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
 
 	public User() {
 	}
 
-	public User(Long id, String fullName, String email, String username, String hashedPassword, String address,
-			String roleName, Timestamp createdAt, Timestamp updatedAt) {
+	public User(Long id, String fullName, String email, String username, String password, String roleName) {
 		this.id = id;
 		this.fullName = fullName;
 		this.email = email;
 		this.username = username;
-		this.hashedPassword = hashedPassword;
-		this.address = address;
+		this.password = password;
 		this.roleName = roleName;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	public Long getId() {
@@ -62,20 +55,12 @@ public class User {
 		this.username = username;
 	}
 
-	public String getHashedPassword() {
-		return hashedPassword;
+	public String getPassword() {
+		return this.password;
 	}
-
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getRoleName() {
@@ -85,21 +70,5 @@ public class User {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Timestamp getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Timestamp updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
+	
 }

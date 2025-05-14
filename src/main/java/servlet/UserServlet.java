@@ -14,7 +14,7 @@ import handler.UserServletHandleGet;
 import handler.UserServletHandlePost;
 import model.User;
 
-@WebServlet({ "/login", "/logout", "/register", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser", "/myAccount", "/updateMyAccount", "/retrivePassowrd" })
+@WebServlet({ "/login", "/logout", "/register", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser", "/myAccount", "/updateMyAccount", "/retrievePassowrd" })
 public class UserServlet extends HttpServlet {
 
 	private UserServletHandleGet handleGet;
@@ -30,6 +30,12 @@ public class UserServlet extends HttpServlet {
 	private static final String DELETE_USER_PATTERN = "/deleteUser";  // GET
 	private static final String MY_ACCOUNT_PATTERN = "/myAccount";  // GET
 	private static final String UPDATE_MY_ACCOUNT_PATTERN = "/updateMyAccount";  // GET & POST
+	private static final String RETRIEVE_PASSWORD = "/retrievePassowrd";  // GET & POST
+	
+	public UserServlet() {
+		this.handleGet = new UserServletHandleGet();
+		this.handlePost = new UserServletHandlePost();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -76,6 +82,10 @@ public class UserServlet extends HttpServlet {
 		case UPDATE_MY_ACCOUNT_PATTERN:
 			// Implementation ...
 			break;
+			
+		case RETRIEVE_PASSWORD:
+			// Implementation ...
+			break;
 
 		}
 	}
@@ -103,6 +113,10 @@ public class UserServlet extends HttpServlet {
 			break;
 			
 		case UPDATE_MY_ACCOUNT_PATTERN:
+			// Implementation ...
+			break;
+			
+		case RETRIEVE_PASSWORD:
 			// Implementation ...
 			break;
 			

@@ -9,38 +9,30 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>ĐĂNG KÝ</h1>
+	<h1>ĐĂNG NHẬP</h1>
 	
-	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Họ và tên:&emsp;<input id="full-name" type="text"/>
-		<br>
-		Email:&emsp;<input id="email" type="text"/>
-		<br>
+	<form id="simple-form" enctype="application/x-www-form-urlencoded">
 		Tên đăng nhập:&emsp;<input id="username" type="text"/>
 		<br>
 		Mật khẩu:&emsp;<input id="password" type="password"/>
 		<br>
-		Nhập lại mật khẩu:&emsp;<input id="re-password" type="password"/>
+		<button type="button" onclick="submitFormLogin()">Đăng nhập</button>
 		<br>
-		<button type="button" onclick="submitFormRegister()">Đăng ký</button>
-		<br>
-		<a href="./login">Đăng nhập</a>
+		<a href="./register">Đăng ký</a>&emsp;/&emsp;<a href="./retrievePassword">Quên mật khẩu</a>
 	</form>
 	
 	<script>
-		function submitFormRegister() {
+		function submitFormLogin() {
 		    const form = document.getElementById("simple-form");
 
 		    const params = new URLSearchParams();
-		    params.append("fullNameInput", document.getElementById("full-name").value);
-		    params.append("emailInput", document.getElementById("email").value);
 		    params.append("usernameInput", document.getElementById("username").value);
 		    params.append("passwordInput", document.getElementById("password").value);
 	
-		    fetch("./register", {
+		    fetch("./login", {
 		        method: "POST",
 		        headers: {
-		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+		            "Content-Type": "application/x-www-form-urlencoded"
 		        },
 		        body: params.toString()
 		    })

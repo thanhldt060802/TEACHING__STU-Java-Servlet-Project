@@ -58,6 +58,8 @@
 		    <option value="CUSTOMER">CUSTOMER</option>
 		</select>
 		<br>
+		Địa chỉ:&emsp;<input id="address" type="text"/>
+		<br>
 		<button type="button" onclick="submitFormCreateUser()">Tạo mới</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
@@ -71,6 +73,7 @@
 		    params.append("emailInput", document.getElementById("email").value);
 		    params.append("usernameInput", document.getElementById("username").value);
 		    params.append("passwordInput", document.getElementById("password").value);
+		    params.append("addressInput", document.getElementById("address").value);
 		    params.append("roleNameInput", document.getElementById("role-name").value);
 	
 		    fetch("./createUser", {
@@ -96,6 +99,7 @@
 		    document.getElementById("email").value = "";
 		    document.getElementById("username").value = "";
 		    document.getElementById("password").value = "";
+		    document.getElementById("address").value = "";
 		    document.getElementById("role-name").value = "ADMIN";
 		}
 	</script>

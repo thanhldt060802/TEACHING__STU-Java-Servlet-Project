@@ -27,11 +27,8 @@ public class UserDAO {
 				user.setFullName(rsGetAllUsers.getString("full_name"));
 				user.setEmail(rsGetAllUsers.getString("email"));
 				user.setUsername(rsGetAllUsers.getString("username"));
-				user.setHashedPassword(rsGetAllUsers.getString("hashed_password"));
-				user.setAddress(rsGetAllUsers.getString("address"));
+				user.setPassword(rsGetAllUsers.getString("password"));
 				user.setRoleName(rsGetAllUsers.getString("role_name"));
-				user.setCreatedAt(rsGetAllUsers.getTimestamp("created_at"));
-				user.setUpdatedAt(rsGetAllUsers.getTimestamp("updated_at"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -55,11 +52,8 @@ public class UserDAO {
 				foundUser.setFullName(rsGetUserById.getString("full_name"));
 				foundUser.setEmail(rsGetUserById.getString("email"));
 				foundUser.setUsername(rsGetUserById.getString("username"));
-				foundUser.setHashedPassword(rsGetUserById.getString("hashed_password"));
-				foundUser.setAddress(rsGetUserById.getString("address"));
+				foundUser.setPassword(rsGetUserById.getString("password"));
 				foundUser.setRoleName(rsGetUserById.getString("role_name"));
-				foundUser.setCreatedAt(rsGetUserById.getTimestamp("created_at"));
-				foundUser.setUpdatedAt(rsGetUserById.getTimestamp("updated_at"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,11 +76,8 @@ public class UserDAO {
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
-				foundUser.setHashedPassword(rsGetUserByUsername.getString("hashed_password"));
-				foundUser.setAddress(rsGetUserByUsername.getString("address"));
+				foundUser.setPassword(rsGetUserByUsername.getString("password"));
 				foundUser.setRoleName(rsGetUserByUsername.getString("role_name"));
-				foundUser.setCreatedAt(rsGetUserByUsername.getTimestamp("created_at"));
-				foundUser.setUpdatedAt(rsGetUserByUsername.getTimestamp("updated_at"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,11 +100,8 @@ public class UserDAO {
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
-				foundUser.setHashedPassword(rsGetUserByUsername.getString("hashed_password"));
-				foundUser.setAddress(rsGetUserByUsername.getString("address"));
+				foundUser.setPassword(rsGetUserByUsername.getString("password"));
 				foundUser.setRoleName(rsGetUserByUsername.getString("role_name"));
-				foundUser.setCreatedAt(rsGetUserByUsername.getTimestamp("created_at"));
-				foundUser.setUpdatedAt(rsGetUserByUsername.getTimestamp("updated_at"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,16 +110,15 @@ public class UserDAO {
 	}
 	
 	public boolean createUser(User newUser) {
-		String sqlInsertUser = "INSERT INTO users(full_name, email, username, hashed_password, address, role_name) VALUES (?, ?, ?, ?, ?, ?)";
+		String sqlInsertUser = "INSERT INTO users(full_name, email, username, password, role_name) VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertUser = connection.prepareStatement(sqlInsertUser);
 			statementInsertUser.setString(1, newUser.getFullName());
 			statementInsertUser.setString(2, newUser.getEmail());
 			statementInsertUser.setString(3, newUser.getUsername());
-			statementInsertUser.setString(4, newUser.getHashedPassword());
-			statementInsertUser.setString(5, newUser.getAddress());
-			statementInsertUser.setString(6, newUser.getRoleName());
+			statementInsertUser.setString(4, newUser.getPassword());
+			statementInsertUser.setString(5, newUser.getRoleName());
 
 			statementInsertUser.executeUpdate();
 			return true;
@@ -142,16 +129,15 @@ public class UserDAO {
 	}
 	
 	public boolean updateUser(User updatedUser) {
-		String sqlUpdateUser = "UPDATE users SET full_name = ?, email = ?, hashed_password = ?, address = ?, role_name = ? WHERE id = ?";
+		String sqlUpdateUser = "UPDATE users SET full_name = ?, email = ?, password = ?, role_name = ? WHERE id = ?";
         try {
         	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateUser = connection.prepareStatement(sqlUpdateUser);
             statementUpdateUser.setString(1, updatedUser.getFullName());
             statementUpdateUser.setString(2, updatedUser.getEmail());
-            statementUpdateUser.setString(3, updatedUser.getHashedPassword());
-            statementUpdateUser.setString(4, updatedUser.getAddress());
-            statementUpdateUser.setString(5, updatedUser.getRoleName());
-            statementUpdateUser.setLong(6, updatedUser.getId());
+            statementUpdateUser.setString(3, updatedUser.getPassword());
+            statementUpdateUser.setString(4, updatedUser.getRoleName());
+            statementUpdateUser.setLong(5, updatedUser.getId());
 
             statementUpdateUser.executeUpdate();
             return true;
