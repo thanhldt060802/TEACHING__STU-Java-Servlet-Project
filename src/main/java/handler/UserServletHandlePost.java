@@ -23,6 +23,7 @@ public class UserServletHandlePost {
 		String password = request.getParameter("passwordInput");
 		
 		User loginUser = this.userDAO.getUserByUsername(username);
+		
 		if (loginUser == null) {
 			System.out.println("Username of user is not valid");
 			response.sendRedirect("./login");
@@ -144,11 +145,11 @@ public class UserServletHandlePost {
 	
 	public void handleUpdateMyAccount(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		User loginUser = (User)request.getSession().getAttribute("loginUser");
-		
 		String fullName = request.getParameter("fullNameInput");
 		String email = request.getParameter("emailInput");
 		String password = request.getParameter("newPasswordInput");
+		
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		
 		loginUser.setFullName(fullName);
 		if(!loginUser.getEmail().equals(email)) {
@@ -180,6 +181,7 @@ public class UserServletHandlePost {
 		String email = request.getParameter("emailInput");
 		
 		User foundUser = this.userDAO.getUserByUsername(username);
+		
 		if(!foundUser.getEmail().equals(email)) {
 			System.out.println("Email of account do not match");
 			response.sendRedirect("./retrievePassword");

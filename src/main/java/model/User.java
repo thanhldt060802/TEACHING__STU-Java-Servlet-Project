@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class User {
 
-	private Long id;
+	private Long userId;
 	private String fullName;
 	private String email;
 	private String username;
@@ -14,8 +14,8 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, String fullName, String email, String username, String password, String roleName) {
-		this.id = id;
+	public User(Long userId, String fullName, String email, String username, String password, String roleName) {
+		this.userId = userId;
 		this.fullName = fullName;
 		this.email = email;
 		this.username = username;
@@ -23,12 +23,12 @@ public class User {
 		this.roleName = roleName;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getUserId() {
+		return this.userId;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getFullName() {

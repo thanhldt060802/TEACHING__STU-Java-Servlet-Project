@@ -18,7 +18,7 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= foundUser.getId() %>" readonly="readonly"/>
+		Id:&emsp;<input id="id" type="text" value="<%= foundUser.getUserId() %>" readonly="readonly"/>
 		<br>
 		Họ và tên:&emsp;<input id="full-name" type="text" value="<%= foundUser.getFullName() %>"/>
 		<br>
@@ -27,12 +27,12 @@
 		Tên đăng nhập:&emsp;<input id="username" type="text"  value="<%= foundUser.getUsername() %>" readonly="readonly"/>
 		<br>
 		Vai trò:&emsp;<select id="role-name">
-		    <option value="ADMIN" <%=foundUser.getRoleName().equals("ADMIN") ? "selected" : "" %>>ADMIN</option>
-		    <option value="CUSTOMER" <%=foundUser.getRoleName().equals("CUSTOMER") ? "selected" : "" %>>CUSTOMER</option>
+		    <option value="ADMIN" <%= foundUser.getRoleName().equals("ADMIN") ? "selected" : "" %>>ADMIN</option>
+		    <option value="CUSTOMER" <%= foundUser.getRoleName().equals("CUSTOMER") ? "selected" : "" %>>CUSTOMER</option>
 		</select>
 		<br>
 		<button type="button" onclick="submitFormUpdateUser()">Cập nhật</button>
-		<button type="button" onclick="deleteUser('<%= foundUser.getId()%>')">Xoá</button>
+		<button type="button" onclick="deleteUser('<%= foundUser.getUserId() %>')">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	

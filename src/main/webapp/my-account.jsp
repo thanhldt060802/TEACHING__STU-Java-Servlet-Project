@@ -18,7 +18,7 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= loginUser.getId() %>" readonly="readonly"/>
+		Id:&emsp;<input id="id" type="text" value="<%= loginUser.getUserId() %>" readonly="readonly"/>
 		<br>
 		Họ và tên:&emsp;<input id="full-name" type="text" value="<%= loginUser.getFullName() %>"/>
 		<br>

@@ -23,7 +23,7 @@ public class UserDAO {
 			ResultSet rsGetAllUsers = statementGetAllUsers.executeQuery();
 			while (rsGetAllUsers.next()) {
 				User user = new User();
-				user.setId(rsGetAllUsers.getLong("user_id"));
+				user.setUserId(rsGetAllUsers.getLong("user_id"));
 				user.setFullName(rsGetAllUsers.getString("full_name"));
 				user.setEmail(rsGetAllUsers.getString("email"));
 				user.setUsername(rsGetAllUsers.getString("username"));
@@ -48,7 +48,7 @@ public class UserDAO {
 			ResultSet rsGetUserById = statementGetUserById.executeQuery();
 			if (rsGetUserById.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserById.getLong("user_id"));
+				foundUser.setUserId(rsGetUserById.getLong("user_id"));
 				foundUser.setFullName(rsGetUserById.getString("full_name"));
 				foundUser.setEmail(rsGetUserById.getString("email"));
 				foundUser.setUsername(rsGetUserById.getString("username"));
@@ -72,7 +72,7 @@ public class UserDAO {
 			ResultSet rsGetUserByUsername = statementGetUserByUsername.executeQuery();
 			if (rsGetUserByUsername.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserByUsername.getLong("user_id"));
+				foundUser.setUserId(rsGetUserByUsername.getLong("user_id"));
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
@@ -96,7 +96,7 @@ public class UserDAO {
 			ResultSet rsGetUserByUsername = statementGetUserByUsername.executeQuery();
 			if (rsGetUserByUsername.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserByUsername.getLong("user_id"));
+				foundUser.setUserId(rsGetUserByUsername.getLong("user_id"));
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
@@ -137,7 +137,7 @@ public class UserDAO {
             statementUpdateUser.setString(2, updatedUser.getEmail());
             statementUpdateUser.setString(3, updatedUser.getPassword());
             statementUpdateUser.setString(4, updatedUser.getRoleName());
-            statementUpdateUser.setLong(5, updatedUser.getId());
+            statementUpdateUser.setLong(5, updatedUser.getUserId());
 
             statementUpdateUser.executeUpdate();
             return true;
