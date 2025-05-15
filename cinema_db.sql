@@ -96,5 +96,16 @@ CREATE TABLE ticket_products (
     quantity INT NOT NULL,
     total_price BIGINT NOT NULL,
     FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id),
-    FOREIGN KEY (product_id) REFERENCES seats(product_id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
+
+
+-- INSERT DATA
+
+INSERT INTO users (full_name, email, username, `password`, role_name) VALUES
+('Phạm Thái Duy', 'phamthaiduy@gmail.com', 'phamthaiduy', '123', 'ADMIN'),
+('Trần Anh Tài', 'trananhtai@gmail.com', 'trananhtai', '123', 'CUSTOMER'),
+('Lê Hoàng Thục', 'lehoangthuc@gmail.com', 'lehoangthuc', '123', 'CUSTOMER'),
+('Nguyễn Hoàng Phúc', 'nguyenhoangphuc@gmail.com', 'nguyenhoangphuc', '123', 'CUSTOMER'),
+('Lê Văn Hiệp', 'levanhiep@gmail.com', 'levanhiep', '123', 'CUSTOMER'),
+('Nguyễn Thị Hồng', 'nguyenthihong@gmail.com', 'nguyenthihong', '123', 'CUSTOMER');
