@@ -77,5 +77,20 @@ public class UserServletHandleGet {
 		System.out.println("Delete user successful");
 		response.sendRedirect("./getUsers");
 	}
+	
+	public void handleMyAccount(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("./my-account.jsp").forward(request, response);
+	}
+	
+	public void handleUpdateMyAccount(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.sendRedirect("./myAccount");
+	}
+	
+	public void handleRetrievePassword(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("./retrieve-password.jsp").forward(request, response);
+	}
 
 }

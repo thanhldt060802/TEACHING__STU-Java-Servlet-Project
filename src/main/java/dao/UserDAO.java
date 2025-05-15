@@ -23,7 +23,7 @@ public class UserDAO {
 			ResultSet rsGetAllUsers = statementGetAllUsers.executeQuery();
 			while (rsGetAllUsers.next()) {
 				User user = new User();
-				user.setId(rsGetAllUsers.getLong("id"));
+				user.setId(rsGetAllUsers.getLong("user_id"));
 				user.setFullName(rsGetAllUsers.getString("full_name"));
 				user.setEmail(rsGetAllUsers.getString("email"));
 				user.setUsername(rsGetAllUsers.getString("username"));
@@ -39,7 +39,7 @@ public class UserDAO {
 	
 	public User getUserById(Long id) {
 		User foundUser = null;
-		String sqlGetUserById = "SELECT * FROM users WHERE id = ?";
+		String sqlGetUserById = "SELECT * FROM users WHERE user_id = ?";
 		try {
 			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetUserById = connection.prepareStatement(sqlGetUserById);
@@ -48,7 +48,7 @@ public class UserDAO {
 			ResultSet rsGetUserById = statementGetUserById.executeQuery();
 			if (rsGetUserById.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserById.getLong("id"));
+				foundUser.setId(rsGetUserById.getLong("user_id"));
 				foundUser.setFullName(rsGetUserById.getString("full_name"));
 				foundUser.setEmail(rsGetUserById.getString("email"));
 				foundUser.setUsername(rsGetUserById.getString("username"));
@@ -72,7 +72,7 @@ public class UserDAO {
 			ResultSet rsGetUserByUsername = statementGetUserByUsername.executeQuery();
 			if (rsGetUserByUsername.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserByUsername.getLong("id"));
+				foundUser.setId(rsGetUserByUsername.getLong("user_id"));
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
@@ -96,7 +96,7 @@ public class UserDAO {
 			ResultSet rsGetUserByUsername = statementGetUserByUsername.executeQuery();
 			if (rsGetUserByUsername.next()) {
 				foundUser = new User();
-				foundUser.setId(rsGetUserByUsername.getLong("id"));
+				foundUser.setId(rsGetUserByUsername.getLong("user_id"));
 				foundUser.setFullName(rsGetUserByUsername.getString("full_name"));
 				foundUser.setEmail(rsGetUserByUsername.getString("email"));
 				foundUser.setUsername(rsGetUserByUsername.getString("username"));
@@ -129,7 +129,7 @@ public class UserDAO {
 	}
 	
 	public boolean updateUser(User updatedUser) {
-		String sqlUpdateUser = "UPDATE users SET full_name = ?, email = ?, password = ?, role_name = ? WHERE id = ?";
+		String sqlUpdateUser = "UPDATE users SET full_name = ?, email = ?, password = ?, role_name = ? WHERE user_id = ?";
         try {
         	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateUser = connection.prepareStatement(sqlUpdateUser);
@@ -148,7 +148,7 @@ public class UserDAO {
 	}
 	
 	public boolean deleteUser(Long id) {
-		String sqlDeleteUser = "DELETE FROM users WHERE id = ?";
+		String sqlDeleteUser = "DELETE FROM users WHERE user_id = ?";
         try {
         	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementDeleteUser = connection.prepareStatement(sqlDeleteUser);

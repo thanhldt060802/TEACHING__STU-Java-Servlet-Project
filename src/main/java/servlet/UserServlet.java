@@ -14,7 +14,7 @@ import handler.UserServletHandleGet;
 import handler.UserServletHandlePost;
 import model.User;
 
-@WebServlet({ "/login", "/logout", "/register", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser", "/myAccount", "/updateMyAccount", "/retrievePassowrd" })
+@WebServlet({ "/login", "/logout", "/register", "/getUsers", "/getUserDetail", "/createUser", "/updateUser", "/deleteUser", "/myAccount", "/updateMyAccount", "/retrievePassword" })
 public class UserServlet extends HttpServlet {
 
 	private UserServletHandleGet handleGet;
@@ -30,7 +30,7 @@ public class UserServlet extends HttpServlet {
 	private static final String DELETE_USER_PATTERN = "/deleteUser";  // GET
 	private static final String MY_ACCOUNT_PATTERN = "/myAccount";  // GET
 	private static final String UPDATE_MY_ACCOUNT_PATTERN = "/updateMyAccount";  // GET & POST
-	private static final String RETRIEVE_PASSWORD = "/retrievePassowrd";  // GET & POST
+	private static final String RETRIEVE_PASSWORD = "/retrievePassword";  // GET & POST
 	
 	public UserServlet() {
 		this.handleGet = new UserServletHandleGet();
@@ -76,15 +76,15 @@ public class UserServlet extends HttpServlet {
 			break;
 			
 		case MY_ACCOUNT_PATTERN:
-			// Implementation ...
+			this.handleGet.handleMyAccount(request, response);
 			break;
 			
 		case UPDATE_MY_ACCOUNT_PATTERN:
-			// Implementation ...
+			this.handleGet.handleUpdateMyAccount(request, response);
 			break;
 			
 		case RETRIEVE_PASSWORD:
-			// Implementation ...
+			this.handleGet.handleRetrievePassword(request, response);
 			break;
 
 		}
@@ -113,11 +113,11 @@ public class UserServlet extends HttpServlet {
 			break;
 			
 		case UPDATE_MY_ACCOUNT_PATTERN:
-			// Implementation ...
+			this.handlePost.handleUpdateMyAccount(request, response);
 			break;
 			
 		case RETRIEVE_PASSWORD:
-			// Implementation ...
+			this.handlePost.handleRetrievePassword(request, response);
 			break;
 			
 		}

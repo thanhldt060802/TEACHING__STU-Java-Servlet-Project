@@ -131,6 +131,7 @@ public class UserServletHandlePost {
 			}
 		}
 		foundUser.setRoleName(roleName);
+		
 		if(!this.userDAO.updateUser(foundUser)) {
 			System.out.println("Update user failed");
 			response.sendRedirect("./getUserDetail?id=" + id);
@@ -139,6 +140,56 @@ public class UserServletHandlePost {
 		
 		System.out.println("Update user successful");
 		response.sendRedirect("./getUserDetail?id=" + id);
+	}
+	
+	public void handleUpdateMyAccount(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		User loginUser = (User)request.getSession().getAttribute("loginUser");
+		
+		String fullName = request.getParameter("fullNameInput");
+		String email = request.getParameter("emailInput");
+		String password = request.getParameter("newPasswordInput");
+		
+		loginUser.setFullName(fullName);
+		if(!loginUser.getEmail().equals(email)) {
+			if(this.userDAO.getUserByEmail(email) != null) {
+				System.out.println("Email of user is already exists");
+				response.sendRedirect("./myAccount");
+				return;
+			}else {
+				loginUser.setEmail(email);
+			}
+		}
+		if(!password.equals("")) {
+			loginUser.setPassword(password);
+		}
+		
+		if(!this.userDAO.updateUser(loginUser)) {
+			System.out.println("Update account failed");
+			response.sendRedirect("./myAccount");
+			return;
+		}
+		
+		System.out.println("Update account successful");
+		response.sendRedirect("./myAccount");
+	}
+	
+	public void handleRetrievePassword(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {		
+		String username = request.getParameter("usernameInput");
+		String email = request.getParameter("emailInput");
+		
+		User foundUser = this.userDAO.getUserByUsername(username);
+		if(!foundUser.getEmail().equals(email)) {
+			System.out.println("Email of account do not match");
+			response.sendRedirect("./retrievePassword");
+			return;
+		}
+		
+		// Send Email
+		
+		System.out.println("Check your email");
+		response.sendRedirect("./retrievePassword");
 	}
 
 }

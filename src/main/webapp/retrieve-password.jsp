@@ -23,7 +23,28 @@
 	
 	<script>
 		function submitFormRetrievePassword() {
-		    // Implementation ...
+			const form = document.getElementById("simple-form");
+			
+			const params = new URLSearchParams();
+		    params.append("usernameInput", document.getElementById("username").value);
+		    params.append("emailInput", document.getElementById("email").value);
+	
+		    fetch("./retrievePassword", {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+		        },
+		        body: params.toString()
+		    })
+		    .then(response => {
+	            if(response.redirected) {
+	                window.location.href = response.url;
+	            }
+        	})
+		    .catch(error => {
+		        console.error("Lỗi:", error);
+		        alert("Đã xảy ra lỗi khi gửi dữ liệu.");
+		    });
 		}
 	</script>
 
