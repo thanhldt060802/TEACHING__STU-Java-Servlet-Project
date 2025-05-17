@@ -45,6 +45,7 @@ CREATE TABLE seats (
     seat_number VARCHAR(10) NOT NULL,
     price BIGINT NOT NULL,
     discount INT NOT NULL,
+    available BIT NOT NULL,
     FOREIGN KEY (show_id) REFERENCES shows(show_id)
 );
 
