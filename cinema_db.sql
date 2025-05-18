@@ -55,7 +55,7 @@ CREATE TABLE products (
     product_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     price BIGINT NOT NULL,
-    discount INT NOT NULL,
+    discount_percentage INT NOT NULL,
     stock INT NOT NULL
 );
 

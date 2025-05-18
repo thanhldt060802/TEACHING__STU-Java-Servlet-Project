@@ -110,7 +110,7 @@ public class UserDAO {
 	}
 	
 	public boolean createUser(User newUser) {
-		String sqlInsertUser = "INSERT INTO users(full_name, email, username, password, role_name) VALUES (?, ?, ?, ?, ?, ?)";
+		String sqlInsertUser = "INSERT INTO users(full_name, email, username, password, role_name) VALUES (?, ?, ?, ?, ?)";
 		try {
 			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertUser = connection.prepareStatement(sqlInsertUser);
