@@ -18,7 +18,7 @@ CREATE TABLE movies (
     image TEXT NOT NULL,
     genre VARCHAR(50) NOT NULL,
     duration INT NOT NULL, -- in minutes
-    release_date_at DATE NOT NULL
+    release_date_at TIMESTAMP NOT NULL
 );
 
 -- Rạp
@@ -33,7 +33,7 @@ CREATE TABLE shows (
     show_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     movie_id BIGINT NOT NULL,
     theater_id BIGINT NOT NULL,
-    start_at DATETIME NOT NULL,
+    start_at TIMESTAMP NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
     FOREIGN KEY (theater_id) REFERENCES theaters(theater_id)
 );
@@ -48,7 +48,6 @@ CREATE TABLE seats (
     available BIT NOT NULL,
     FOREIGN KEY (show_id) REFERENCES shows(show_id)
 );
-
 
 -- Sản phẩm (bánh + nước)
 CREATE TABLE products (
@@ -110,3 +109,22 @@ INSERT INTO users (full_name, email, username, `password`, role_name) VALUES
 ('Nguyễn Hoàng Phúc', 'nguyenhoangphuc@gmail.com', 'nguyenhoangphuc', '123', 'CUSTOMER'),
 ('Lê Văn Hiệp', 'levanhiep@gmail.com', 'levanhiep', '123', 'CUSTOMER'),
 ('Nguyễn Thị Hồng', 'nguyenthihong@gmail.com', 'nguyenthihong', '123', 'CUSTOMER');
+
+INSERT INTO movies (title, image, genre, duration, release_date_at) VALUES
+('Edge of Tomorrow', 'image.png', 'Sci-Fi', 113, '2014-06-06'),
+('The Godfather', 'image.png', 'Crime', 175, '1972-03-24'),
+('Inception', 'image.png', 'Action', 148, '2010-07-16'),
+('Finding Nemo', 'image.png', 'Animation', 100, '2003-05-30'),
+('The Dark Knight', 'image.png', 'Action', 152, '2008-07-18');
+
+INSERT INTO theaters (`name`, location) VALUES
+('Cinema 1', 'Downtown, City Center'),
+('Cinema 2', 'Uptown Mall'),
+('Cinema 3', 'Eastside Cinema Complex');
+
+INSERT INTO Products (`name`, price, discount_percentage, stock) VALUES
+('Popcorn Combo', 50000, 10, 100),
+('Coke Large', 30000, 0, 200),
+('Nachos with Cheese', 60000, 15, 80),
+('Sprite Medium', 25000, 0, 150),
+('Hotdog', 45000, 5, 120);

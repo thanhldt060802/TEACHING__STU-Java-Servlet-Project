@@ -34,11 +34,11 @@ public class MovieServlet extends HttpServlet {
 		switch (route) {
 
 		case GET_MOVIES_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetMovies(request, response);
 			break;
 
 		case GET_MOVIE_DETAIL_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetMovieDetail(request, response);
 			break;
 			
 		case CREATE_MOVIE_PATTERN:
@@ -66,7 +66,7 @@ public class MovieServlet extends HttpServlet {
 			break;
 
 		case UPDATE_MOVIE_PATTERN:
-			// Implementation ...
+			this.handlePost.handleUpdateMoive(request, response);
 			break;
 			
 		}

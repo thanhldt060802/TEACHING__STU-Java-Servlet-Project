@@ -6,16 +6,18 @@
 User loginUser = (User) request.getSession().getAttribute("loginUser");
 %>
 
+
+<%
+if(loginUser == null || loginUser.getRoleName().equals("CUSTOMER")) {
+%>
 <div>
-	LỐI TẮT CHUNG:&emsp;&emsp;
-	<%
-	if(loginUser == null || loginUser.getRoleName().equals("CUSTOMER")) {
-	%>
-	<a href="./home">TRANG CHỦ</a>&emsp;/&emsp;<a href="./getMovies">PHIM</a>&emsp;/&emsp;<a href="./getTheaters">RẠP</a>
-	<%
-	}
-	%>
+LỐI TẮT CHUNG:&emsp;&emsp;
+<a href="./home">TRANG CHỦ</a>&emsp;/&emsp;<a href="./getMovies">PHIM</a>&emsp;/&emsp;<a href="./getTheaters">RẠP</a>
 </div>
+<%
+}
+%>
+
 
 <div>
 	TÀI KHOẢN:&emsp;&emsp;
@@ -43,7 +45,7 @@ User loginUser = (User) request.getSession().getAttribute("loginUser");
 </div>
 
 <%
-if (loginUser.getRoleName().equals("ADMIN")) {
+if (loginUser != null && loginUser.getRoleName().equals("ADMIN")) {
 %>
 <div>
 	DỮ LIỆU:&emsp;&emsp;<a href="./getUsers">NGƯỜI DÙNG</a>&emsp;/&emsp;<a href="./getMovies">PHIM</a>&emsp;/&emsp;<a href="./getTheaters">RẠP</a>&emsp;/&emsp;<a href="./getShows">XUẤT CHIẾU</a>&emsp;/&emsp;<a href="./getProducts">SẢN PHẨM</a>&emsp;/&emsp;<a href="./getTickets">VÉ ĐÃ BÁN</a>

@@ -81,7 +81,7 @@ public class MovieDAO {
 	}
 	
 	public boolean updateMovie(Movie updatedMovie) {
-		String sqlUpdateMovie = "UPDATE movies SET title = ?, image = ?, genre = ?, duration = ? WHERE movie_id = ?";
+		String sqlUpdateMovie = "UPDATE movies SET title = ?, image = ?, genre = ?, duration = ?, release_date_at = ? WHERE movie_id = ?";
         try {
         	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateMovie = connection.prepareStatement(sqlUpdateMovie);
@@ -89,7 +89,8 @@ public class MovieDAO {
             statementUpdateMovie.setString(2, updatedMovie.getImage());
             statementUpdateMovie.setString(3, updatedMovie.getGenre());
             statementUpdateMovie.setInt(4, updatedMovie.getDuration());
-            statementUpdateMovie.setLong(5, updatedMovie.getMovieId());
+            statementUpdateMovie.setTimestamp(5, updatedMovie.getReleaseDateAt());
+            statementUpdateMovie.setLong(6, updatedMovie.getMovieId());
 
             statementUpdateMovie.executeUpdate();
             return true;
