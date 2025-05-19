@@ -48,5 +48,29 @@ public class MovieServletHandleGet {
 			request.getRequestDispatcher("./movie-detail.jsp").forward(request, response);
 		}
 	}
+	
+	public void handleCreateMovie(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.sendRedirect("./getMovies");
+	}
+	
+	public void handleUpdateMovie(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.sendRedirect("./getMovies");
+	}
+	
+	public void handleDeleteMovie(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Long id = Long.parseLong(request.getParameter("id"));
+		
+		if(!this.movieDAO.deleteMovie(id)) {
+			System.out.println("Delete movie failed");
+			response.sendRedirect("./getMovies");
+			return;
+		}
+		
+		System.out.println("Delete user successful");
+		response.sendRedirect("./getMovies");
+	}
 
 }

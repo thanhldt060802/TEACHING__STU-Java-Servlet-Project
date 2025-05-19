@@ -35,7 +35,7 @@
 			<td><%= user.getEmail() %></td>
 			<td><%= user.getUsername() %></td>
 			<td><%= user.getRoleName() %></td>
-			<td><a href="./getUserDetail?id=<%= user.getUserId() %>">Chỉnh sửa</a>&emsp;<a href="./deleteUser?id=<%= user.getUserId() %>">Xoá</a></td>
+			<td><a href="./getUserDetail?id=<%= user.getUserId() %>">Chỉnh sửa</a></td>
 		</tr>
 		<%
 		}

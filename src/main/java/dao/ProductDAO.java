@@ -25,6 +25,7 @@ public class ProductDAO {
 				Product product = new Product();
 				product.setProductId(rsGetAllProducts.getLong("product_id"));
 				product.setName(rsGetAllProducts.getString("name"));
+				product.setImage(rsGetAllProducts.getString("image"));
 				product.setPrice(rsGetAllProducts.getLong("price"));
 				product.setDiscountPercentage(rsGetAllProducts.getInt("discount_percentage"));
 				product.setStock(rsGetAllProducts.getInt("stock"));
@@ -49,6 +50,7 @@ public class ProductDAO {
 				foundProduct = new Product();
 				foundProduct.setProductId(rsGetProductById.getLong("product_id"));
 				foundProduct.setName(rsGetProductById.getString("name"));
+				foundProduct.setImage(rsGetProductById.getString("image"));
 				foundProduct.setPrice(rsGetProductById.getLong("price"));
 				foundProduct.setDiscountPercentage(rsGetProductById.getInt("discount_percentage"));
 				foundProduct.setStock(rsGetProductById.getInt("stock"));
@@ -60,14 +62,15 @@ public class ProductDAO {
 	}
 			
 	public boolean createProduct(Product newProduct) {
-		String sqlInsertProduct = "INSERT INTO products(name, price, discount_percentage, stock) VALUES (?, ?, ?, ?)";
+		String sqlInsertProduct = "INSERT INTO products(name, image, price, discount_percentage, stock) VALUES (?, ?, ?, ?, ?)";
 		try {
 			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertProduct = connection.prepareStatement(sqlInsertProduct);
 			statementInsertProduct.setString(1, newProduct.getName());
-			statementInsertProduct.setLong(2, newProduct.getPrice());
-			statementInsertProduct.setInt(3, newProduct.getDiscountPercentage());
-			statementInsertProduct.setInt(4, newProduct.getStock());
+			statementInsertProduct.setString(2, newProduct.getImage());
+			statementInsertProduct.setLong(3, newProduct.getPrice());
+			statementInsertProduct.setInt(4, newProduct.getDiscountPercentage());
+			statementInsertProduct.setInt(5, newProduct.getStock());
 
 			statementInsertProduct.executeUpdate();
 			return true;
@@ -78,15 +81,16 @@ public class ProductDAO {
 	}
 	
 	public boolean updateProduct(Product updatedProduct) {
-		String sqlUpdateProduct = "UPDATE products SET name = ?, price = ?, discount_percentage = ?, stock= ? WHERE product_id = ?";
+		String sqlUpdateProduct = "UPDATE products SET name = ?, image = ?, price = ?, discount_percentage = ?, stock= ? WHERE product_id = ?";
         try {
         	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateProduct = connection.prepareStatement(sqlUpdateProduct);
             statementUpdateProduct.setString(1, updatedProduct.getName());
-            statementUpdateProduct.setLong(2, updatedProduct.getPrice());
-            statementUpdateProduct.setInt(3, updatedProduct.getDiscountPercentage());
-            statementUpdateProduct.setInt(4, updatedProduct.getStock());
-            statementUpdateProduct.setLong(5, updatedProduct.getProductId());
+            statementUpdateProduct.setString(2, updatedProduct.getImage());
+            statementUpdateProduct.setLong(3, updatedProduct.getPrice());
+            statementUpdateProduct.setInt(4, updatedProduct.getDiscountPercentage());
+            statementUpdateProduct.setInt(5, updatedProduct.getStock());
+            statementUpdateProduct.setLong(6, updatedProduct.getProductId());
 
             statementUpdateProduct.executeUpdate();
             return true;

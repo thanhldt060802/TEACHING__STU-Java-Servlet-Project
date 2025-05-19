@@ -11,7 +11,7 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>CHỈNH SỬA PHIM</h1>
+	<h1>CHỈNH SỬA THÔNG TIN PHIM</h1>
 	
 	<%
 	Movie foundMovie = (Movie)request.getAttribute("foundMovie");
@@ -24,11 +24,11 @@
 		<br>
 		Hình ảnh:&emsp;<input id="image" type="text" value="<%= foundMovie.getImage() %>"/>
 		<br>
-		Thể loại:&emsp;<input id="genre" type="text"  value="<%= foundMovie.getGenre() %>"/>
+		Thể loại:&emsp;<input id="genre" type="text" value="<%= foundMovie.getGenre() %>"/>
 		<br>
-		Thời lượng:&emsp;<input id="duration" type="number"  value="<%= foundMovie.getDuration() %>"/>
+		Thời lượng (phút):&emsp;<input id="duration" type="number" value="<%= foundMovie.getDuration() %>"/>
 		<br>
-		Khởi chiếu:&emsp;<input id="release-date-at" type="date"  value="<%= new SimpleDateFormat("yyyy-MM-dd").format(foundMovie.getReleaseDateAt()) %>"/>
+		Khởi chiếu:&emsp;<input id="release-date-at" type="date" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(foundMovie.getReleaseDateAt()) %>"/>
 		<br>
 		<button type="button" onclick="submitFormUpdateMovie()">Cập nhật</button>
 		<button type="button" onclick="deleteMovie('<%= foundMovie.getMovieId() %>')">Xoá</button>

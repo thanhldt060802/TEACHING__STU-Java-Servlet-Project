@@ -11,7 +11,7 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>CHỈNH SỬA NGƯỜI DÙNG</h1>
+	<h1>CHỈNH SỬA THÔNG TIN NGƯỜI DÙNG</h1>
 	
 	<%
 	User foundUser = (User)request.getAttribute("foundUser");

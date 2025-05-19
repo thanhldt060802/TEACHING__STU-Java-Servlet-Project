@@ -34,23 +34,23 @@ public class ProductServlet extends HttpServlet {
 		switch (route) {
 
 		case GET_PRODUCTS_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetProducts(request, response);
 			break;
 
 		case GET_PRODUCT_DETAIL_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetProductDetail(request, response);
 			break;
 			
 		case CREATE_PRODUCT_PATTERN:
-			// Implementation ...
+			this.handleGet.handleCreateProduct(request, response);
 			break;
 
 		case UPDATE_PRODUCT_PATTERN:
-			// Implementation ...
+			this.handleGet.handleUpdateProduct(request, response);
 			break;
 			
 		case DELETE_PRODUCT_PATTERN:
-			// Implementation ...
+			this.handleGet.handleDeleteProduct(request, response);
 			break;
 
 		}
@@ -62,11 +62,11 @@ public class ProductServlet extends HttpServlet {
 		switch (route) {
 			
 		case CREATE_PRODUCT_PATTERN:
-			// Implementation ...
+			this.handlePost.handleCreateProduct(request, response);
 			break;
 
 		case UPDATE_PRODUCT_PATTERN:
-			// Implementation ...
+			this.handlePost.handleUpdateMoive(request, response);
 			break;
 			
 		}

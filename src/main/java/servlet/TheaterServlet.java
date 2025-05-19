@@ -34,23 +34,23 @@ public class TheaterServlet extends HttpServlet {
 		switch (route) {
 
 		case GET_THEATERS_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetTheaters(request, response);
 			break;
 
 		case GET_THEATER_DETAIL_PATTERN:
-			// Implementation ...
+			this.handleGet.handleGetTheaterDetail(request, response);
 			break;
 			
 		case CREATE_THEATER_PATTERN:
-			// Implementation ...
+			this.handleGet.handleCreateTheater(request, response);
 			break;
 
 		case UPDATE_THEATER_PATTERN:
-			// Implementation ...
+			this.handleGet.handleUpdateTheater(request, response);
 			break;
 			
 		case DELETE_THEATER_PATTERN:
-			// Implementation ...
+			this.handleGet.handleDeleteTheater(request, response);
 			break;
 
 		}
@@ -62,11 +62,11 @@ public class TheaterServlet extends HttpServlet {
 		switch (route) {
 			
 		case CREATE_THEATER_PATTERN:
-			// Implementation ...
+			this.handlePost.handleCreateUser(request, response);
 			break;
 
 		case UPDATE_THEATER_PATTERN:
-			// Implementation ...
+			this.handlePost.handleUpdateMoive(request, response);
 			break;
 			
 		}

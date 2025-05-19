@@ -53,6 +53,7 @@ CREATE TABLE seats (
 CREATE TABLE products (
     product_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
+    image TEXT NOT NULL,
     price BIGINT NOT NULL,
     discount_percentage INT NOT NULL,
     stock INT NOT NULL
@@ -123,8 +124,8 @@ INSERT INTO theaters (`name`, location) VALUES
 ('Cinema 3', 'Eastside Cinema Complex');
 
 INSERT INTO Products (`name`, price, discount_percentage, stock) VALUES
-('Popcorn Combo', 50000, 10, 100),
-('Coke Large', 30000, 0, 200),
-('Nachos with Cheese', 60000, 15, 80),
-('Sprite Medium', 25000, 0, 150),
-('Hotdog', 45000, 5, 120);
+('Popcorn Combo', 'image.png', 50000, 10, 100),
+('Coke Large', 'image.png', 30000, 0, 200),
+('Nachos with Cheese', 'image.png', 60000, 15, 80),
+('Sprite Medium', 'image.png', 25000, 0, 150),
+('Hotdog', 'image.png', 45000, 5, 120);

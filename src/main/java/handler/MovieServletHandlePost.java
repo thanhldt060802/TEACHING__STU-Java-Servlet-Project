@@ -21,6 +21,35 @@ public class MovieServletHandlePost {
 		this.movieDAO = new MovieDAO();
 	}
 	
+	public void handleCreateUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String title = request.getParameter("titleInput");
+		String image = request.getParameter("imageInput");
+		String genre = request.getParameter("genreInput");
+		Integer duration = Integer.parseInt(request.getParameter("durationInput"));
+		Timestamp releaseDateAt = null;
+		try {
+			releaseDateAt = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("releaseDateAtInput")).getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Movie newMovie = new Movie();
+		newMovie.setTitle(title);
+		newMovie.setImage(image);
+		newMovie.setGenre(genre);
+		newMovie.setDuration(duration);
+		newMovie.setReleaseDateAt(releaseDateAt);
+		if(!this.movieDAO.createMovie(newMovie)) {
+			System.out.println("Create movie failed");
+			response.sendRedirect("./getMovies");
+			return;
+		}
+		
+		System.out.println("Create movie successful");
+		response.sendRedirect("./getMovies");
+	}
+	
 	public void handleUpdateMoive(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("idInput"));

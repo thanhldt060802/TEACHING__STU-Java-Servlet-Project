@@ -4,15 +4,17 @@ public class Product {
 	
 	private Long productId;
 	private String name;
+	private String image;
 	private Long price;
 	private Integer discountPercentage;
 	private Integer stock;
 	
 	public Product() {}
 
-	public Product(Long productId, String name, Long price, Integer discountPercentage, Integer stock) {
+	public Product(Long productId, String name, String image, Long price, Integer discountPercentage, Integer stock) {
 		this.productId = productId;
 		this.name = name;
+		this.image = image;
 		this.price = price;
 		this.discountPercentage = discountPercentage;
 		this.stock = stock;
@@ -32,6 +34,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getImage() {
+		return this.image;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public Long getPrice() {
