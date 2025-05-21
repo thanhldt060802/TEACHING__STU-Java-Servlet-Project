@@ -66,7 +66,7 @@ public class ProductServlet extends HttpServlet {
 			break;
 
 		case UPDATE_PRODUCT_PATTERN:
-			this.handlePost.handleUpdateMoive(request, response);
+			this.handlePost.handleUpdateProduct(request, response);
 			break;
 			
 		}

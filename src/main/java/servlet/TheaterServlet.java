@@ -62,11 +62,11 @@ public class TheaterServlet extends HttpServlet {
 		switch (route) {
 			
 		case CREATE_THEATER_PATTERN:
-			this.handlePost.handleCreateUser(request, response);
+			this.handlePost.handleCreateTheater(request, response);
 			break;
 
 		case UPDATE_THEATER_PATTERN:
-			this.handlePost.handleUpdateMoive(request, response);
+			this.handlePost.handleUpdateTheater(request, response);
 			break;
 			
 		}

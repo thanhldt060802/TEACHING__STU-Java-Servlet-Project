@@ -21,7 +21,7 @@ public class MovieServletHandlePost {
 		this.movieDAO = new MovieDAO();
 	}
 	
-	public void handleCreateUser(HttpServletRequest request, HttpServletResponse response)
+	public void handleCreateMovie(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String title = request.getParameter("titleInput");
 		String image = request.getParameter("imageInput");

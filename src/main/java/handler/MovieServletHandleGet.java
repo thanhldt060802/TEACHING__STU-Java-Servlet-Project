@@ -1,22 +1,34 @@
 package handler;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MovieDAO;
+import dao.ShowDAO;
+import dao.TheaterDAO;
 import model.Movie;
+import model.Show;
+import model.Theater;
 import model.User;
 
 public class MovieServletHandleGet {
 	
 	private MovieDAO movieDAO;
+	private ShowDAO showDAO;
+	private TheaterDAO theaterDAO;
 	
 	public MovieServletHandleGet() {
 		this.movieDAO = new MovieDAO();
+		this.showDAO = new ShowDAO();
+		this.theaterDAO = new TheaterDAO();
 	}
 	
 	public void handleGetMovies(HttpServletRequest request, HttpServletResponse response)
@@ -45,6 +57,15 @@ public class MovieServletHandleGet {
 		if(loginUser != null && loginUser.getRoleName().equals("ADMIN")) {
 			request.getRequestDispatcher("./modify-movie.jsp").forward(request, response);
 		}else {
+			Map<Long, List<Show>> theaterIdMap = this.showDAO.getShowsByMovieId(id).stream()
+					.collect(Collectors.groupingBy((show) -> {
+						return show.getTheaterId();
+					}));
+			Map<Theater, List<Show>> theaterMap = new HashMap<Theater, List<Show>>();
+			theaterIdMap.forEach((theaterId, showList) -> {
+				theaterMap.put(this.theaterDAO.getTheaterById(theaterId), showList);
+			});
+			request.setAttribute("theaterMap", theaterMap);
 			request.getRequestDispatcher("./movie-detail.jsp").forward(request, response);
 		}
 	}

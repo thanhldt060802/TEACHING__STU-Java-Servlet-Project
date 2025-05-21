@@ -20,7 +20,7 @@ private TheaterDAO theaterDAO;
 		this.theaterDAO = new TheaterDAO();
 	}
 	
-	public void handleCreateUser(HttpServletRequest request, HttpServletResponse response)
+	public void handleCreateTheater(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name = request.getParameter("nameInput");
 		String location = request.getParameter("locationInput");
@@ -38,7 +38,7 @@ private TheaterDAO theaterDAO;
 		response.sendRedirect("./getTheaters");
 	}
 	
-	public void handleUpdateMoive(HttpServletRequest request, HttpServletResponse response)
+	public void handleUpdateTheater(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("idInput"));
 		String name = request.getParameter("nameInput");

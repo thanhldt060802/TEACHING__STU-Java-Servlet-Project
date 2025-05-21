@@ -16,28 +16,25 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>CHI TIẾT PHIM</h1>
+	<h1>CHI TIẾT RẠP</h1>
 	
 	<%
-	Movie foundMovie = (Movie) request.getAttribute("foundMovie");
-	Map<Theater, List<Show>> theaterMap = (Map<Theater, List<Show>>) request.getAttribute("theaterMap");
+	Theater foundTheater = (Theater) request.getAttribute("foundTheater");
+	Map<Movie, List<Show>> movieMap = (Map<Movie, List<Show>>) request.getAttribute("movieMap");
 	%>
 
 	<ul>
-		<li>Tên phim: <%=foundMovie.getTitle() %></li>
-		<li>Hình ảnh: <%=foundMovie.getImage() %></li>
-		<li>Thể loại: <%=foundMovie.getGenre() %></li>
-		<li>Thời lượng: <%=foundMovie.getDuration() %> phút</li>
-		<li>Khởi chiếu: <%=new SimpleDateFormat("dd/MM/yyyy").format(foundMovie.getReleaseDateAt()) %></li>
+		<li>Tên rạp: <%=foundTheater.getName() %></li>
+		<li>Địa điểm: <%=foundTheater.getLocation() %></li>
 	</ul>
 	
 	<br>
 	
 	<ul>
 		<%
-		for(Entry<Theater, List<Show>> entry : theaterMap.entrySet()) {
+		for(Entry<Movie, List<Show>> entry : movieMap.entrySet()) {
 		%>
-		<li><%= entry.getKey().getName()%>
+		<li><%= entry.getKey().getTitle() %>
 			<ul>
 				<%
 				for(Show show : entry.getValue()) {

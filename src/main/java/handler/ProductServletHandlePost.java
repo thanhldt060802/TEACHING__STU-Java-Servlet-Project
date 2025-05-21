@@ -45,7 +45,7 @@ public class ProductServletHandlePost {
 		response.sendRedirect("./getProducts");
 	}
 	
-	public void handleUpdateMoive(HttpServletRequest request, HttpServletResponse response)
+	public void handleUpdateProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("idInput"));
 		String name = request.getParameter("nameInput");

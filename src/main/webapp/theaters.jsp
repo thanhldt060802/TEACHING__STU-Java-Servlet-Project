@@ -11,7 +11,7 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>DANH SÁCH PHIM</h1>
+	<h1>DANH SÁCH RẠP</h1>
 	
 	<%
 	List<Theater> theaterList = (List<Theater>) request.getAttribute("theaterList");
@@ -21,7 +21,7 @@
 		<%
 		for(Theater theater : theaterList) {
 		%>
-		<li><%=theater.getName() %> <a href="./getMovieDetail?id=<%=theater.getTheaterId() %>">Xem chi tiết</a></li>
+		<li><%=theater.getName() %> (<a href="./getTheaterDetail?id=<%=theater.getTheaterId() %>">Xem chi tiết</a>)</li>
 		<%
 		}
 		%>

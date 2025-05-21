@@ -21,7 +21,7 @@
 		<%
 		for(Movie movie : movieList) {
 		%>
-		<li><%=movie.getTitle() %> - <%=movie.getImage() %> <a href="./getMovieDetail?id=<%=movie.getMovieId() %>">Xem chi tiết</a></li>
+		<li><%=movie.getTitle() %> - <%=movie.getImage() %> (<a href="./getMovieDetail?id=<%=movie.getMovieId() %>">Xem chi tiết</a>)</li>
 		<%
 		}
 		%>
