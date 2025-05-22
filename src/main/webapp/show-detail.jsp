@@ -18,7 +18,7 @@
 <body>
 
 	<jsp:include page="./partial/header.jsp"></jsp:include>
-	<h1>CHI TIẾT RẠP</h1>
+	<h1>CHI TIẾT XUẤT CHIẾU </h1>
 	
 	<%
 	Show foundShow = (Show) request.getAttribute("foundShow");

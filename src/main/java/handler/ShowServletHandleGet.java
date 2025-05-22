@@ -1,7 +1,11 @@
 package handler;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +43,30 @@ public class ShowServletHandleGet {
 			throws ServletException, IOException {
 		List<Show> showList = this.showDAO.getShows();
 		request.setAttribute("showList", showList);
+		
+		Function<Show, Long> keyMapper1 = (show) -> {
+			return show.getShowId();
+		};
+		Function<Show, String> valueMapper1 = (show) -> {
+			return this.movieDAO.getMovieById(show.getMovieId()).getTitle();
+		};
+		Map<Long, String> showIdMovieNameMap = showList.stream().collect(Collectors.toMap(keyMapper1, valueMapper1));
+		request.setAttribute("showIdMovieNameMap", showIdMovieNameMap);
+		
+		Function<Show, Long> keyMapper2 = (show) -> {
+			return show.getShowId();
+		};
+		Function<Show, String> valueMapper2 = (show) -> {
+			return this.theaterDAO.getTheaterById(show.getTheaterId()).getName();
+		};
+		Map<Long, String> showIdTheaterNameMap = showList.stream().collect(Collectors.toMap(keyMapper2, valueMapper2));
+		request.setAttribute("showIdTheaterNameMap", showIdTheaterNameMap);
+		
+		List<Movie> movieList = this.movieDAO.getMovies();
+		request.setAttribute("movieList", movieList);
+		
+		List<Theater> theaterList = this.theaterDAO.getTheaters();
+		request.setAttribute("theaterList", theaterList);
 		
 		request.getRequestDispatcher("./table-show.jsp").forward(request, response);
 	}

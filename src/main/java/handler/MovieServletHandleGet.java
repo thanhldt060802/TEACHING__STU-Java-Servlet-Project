@@ -61,10 +61,12 @@ public class MovieServletHandleGet {
 					.collect(Collectors.groupingBy((show) -> {
 						return show.getTheaterId();
 					}));
+			
 			Map<Theater, List<Show>> theaterMap = new HashMap<Theater, List<Show>>();
 			theaterIdMap.forEach((theaterId, showList) -> {
 				theaterMap.put(this.theaterDAO.getTheaterById(theaterId), showList);
 			});
+			
 			request.setAttribute("theaterMap", theaterMap);
 			request.getRequestDispatcher("./movie-detail.jsp").forward(request, response);
 		}

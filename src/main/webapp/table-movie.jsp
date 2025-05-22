@@ -68,8 +68,8 @@
 		    params.append("titleInput", document.getElementById("title").value);
 		    params.append("imageInput", document.getElementById("image").value);
 		    params.append("genreInput", document.getElementById("genre").value);
-		    params.append("duration", document.getElementById("duration").value);
-		    params.append("releaseDateAt", document.getElementById("release-date-at").value);
+		    params.append("durationInput", document.getElementById("duration").value);
+		    params.append("releaseDateAtInput", document.getElementById("release-date-at").value);
 	
 		    fetch("./createMovie", {
 		        method: "POST",

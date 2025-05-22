@@ -27,7 +27,7 @@ public class ShowServletHandlePost {
 		Long theaterId = Long.parseLong(request.getParameter("theaterIdInput"));
 		Timestamp startAt = null;
 		try {
-			startAt = new Timestamp(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(request.getParameter("startAtInput")).getTime());
+			startAt = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startAtInput")).getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +51,7 @@ public class ShowServletHandlePost {
 		Long id = Long.parseLong(request.getParameter("idInput"));
 		Timestamp startAt = null;
 		try {
-			startAt = new Timestamp(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(request.getParameter("startAtInput")).getTime());
+			startAt = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startAtInput")).getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
