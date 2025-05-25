@@ -73,6 +73,10 @@
 		<br>
 		Thời gian:&emsp;<input id="start-at" type="date"/>
 		<br>
+		Giá tiền (VNĐ):&emsp;<input id="price" type="number"/>
+		<br>
+		Giảm giá (%):&emsp;<input id="discount-percentage" type="number"/>
+		<br>
 		<button type="button" onclick="submitFormCreateShow()">Tạo mới</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
@@ -85,6 +89,8 @@
 		    params.append("movieIdInput", document.getElementById("movie-id").value);
 		    params.append("theaterIdInput", document.getElementById("theater-id").value);
 		    params.append("startAtInput", document.getElementById("start-at").value);
+		    params.append("priceInput", document.getElementById("price").value);
+		    params.append("discountPercentageInput", document.getElementById("discount-percentage").value);
 	
 		    fetch("./createShow", {
 		        method: "POST",
@@ -108,6 +114,8 @@
 		    document.getElementById("movie-id").value = "";
 		    document.getElementById("theater-id").value = "";
 		    document.getElementById("start-at").value = "";
+		    document.getElementById("price").value = "";
+		    document.getElementById("discount-percentage").value = "";
 		}
 	</script>
 	

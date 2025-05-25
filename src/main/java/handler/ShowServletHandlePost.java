@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.SeatDAO;
 import dao.ShowDAO;
+import model.Seat;
 import model.Show;
 import model.User;
 
@@ -31,11 +33,15 @@ public class ShowServletHandlePost {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		Long price = Long.parseLong(request.getParameter("priceInput"));
+		Integer discountPercentage = Integer.parseInt(request.getParameter("discountPercentageInput"));
 		
 		Show newShow = new Show();
 		newShow.setMovieId(movieId);
 		newShow.setTheaterId(theaterId);
 		newShow.setStartAt(startAt);
+		newShow.setPrice(price);
+		newShow.setDiscountPercentage(discountPercentage);
 		if(!this.showDAO.createShow(newShow)) {
 			System.out.println("Create show failed");
 			response.sendRedirect("./getShows");
@@ -55,9 +61,13 @@ public class ShowServletHandlePost {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		Long price = Long.parseLong(request.getParameter("priceInput"));
+		Integer discountPercentage = Integer.parseInt(request.getParameter("discountPercentageInput"));
 		
 		Show foundShow = this.showDAO.getShowById(id);
 		foundShow.setStartAt(startAt);
+		foundShow.setPrice(price);
+		foundShow.setDiscountPercentage(discountPercentage);
 		
 		if(!this.showDAO.updateShow(foundShow)) {
 			System.out.println("Update show failed");

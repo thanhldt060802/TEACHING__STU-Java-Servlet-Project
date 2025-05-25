@@ -8,14 +8,18 @@ public class Show {
 	private Long movieId;
 	private Long theaterId;
 	private Timestamp startAt;
+	private Long price;
+	private Integer discountPercentage;
 	
 	public Show() {}
 
-	public Show(Long showId, Long movieId, Long theaterId, Timestamp startAt) {
+	public Show(Long showId, Long movieId, Long theaterId, Timestamp startAt, Long price, Integer discountPercentage) {
 		this.showId = showId;
 		this.movieId = movieId;
 		this.theaterId = theaterId;
 		this.startAt = startAt;
+		this.price = price;
+		this.discountPercentage = discountPercentage;
 	}
 
 	public Long getShowId() {
@@ -48,6 +52,22 @@ public class Show {
 
 	public void setStartAt(Timestamp startAt) {
 		this.startAt = startAt;
+	}
+	
+	public Long getPrice() {
+		return this.price;
+	}
+	
+	public void setPrice(Long price) {
+		this.price = price;
+	}
+	
+	public Integer getDiscountPercentage() {
+		return this.discountPercentage;
+	}
+	
+	public void setDiscountPercentage(Integer discountPercentage) {
+		this.discountPercentage = discountPercentage;
 	}
 	
 }

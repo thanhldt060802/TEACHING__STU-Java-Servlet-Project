@@ -90,11 +90,7 @@
 		}
 		
 		function resetForm() {
-		    document.getElementById("title").value = "";
-		    document.getElementById("image").value = "";
-		    document.getElementById("genre").value = "";
-		    document.getElementById("duration").value = "";
-		    document.getElementById("release-date-at").value = "";
+			location.reload();
 		}
 	</script>
 	

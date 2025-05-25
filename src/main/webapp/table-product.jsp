@@ -89,11 +89,7 @@
 		}
 		
 		function resetForm() {
-			document.getElementById("name").value = "";
-			document.getElementById("image").value = "";
-		    document.getElementById("price").value = "";
-		    document.getElementById("discount-percentage").value = "";
-		    document.getElementById("stock").value = "";
+			location.reload();
 		}
 	</script>
 	

@@ -1,7 +1,6 @@
 package handler;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -120,6 +119,28 @@ public class ShowServletHandleGet {
 		
 		System.out.println("Delete user successful");
 		response.sendRedirect("./getShows");
+	}
+	
+	public void handleGenerateSeats(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Long id = Long.parseLong(request.getParameter("id"));
+		
+		for(char c = 'A'; c <= 'E'; c++) {
+			for(int i = 1; i <= 5; i++) {
+				Seat newSeat = new Seat();
+				newSeat.setShowId(id);
+				newSeat.setSeatNumber(String.format("%c%d", c, i));
+				newSeat.setAvailable(true);
+				if(!this.seatDAO.createSeat(newSeat)) {
+					System.out.println("Generate seats failed");
+					response.sendRedirect("./getShowDetail?id=" + id);
+					return;
+				}
+			}
+		}
+		
+		System.out.println("Generate seats successful");
+		response.sendRedirect("./getShowDetail?id=" + id);
 	}
 
 }

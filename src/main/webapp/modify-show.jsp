@@ -33,30 +33,59 @@
 		<br>
 		Thời gian:&emsp;<input id="start-at" type="date" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(foundShow.getStartAt()) %>"/>
 		<br>
+		Giá tiền (VNĐ):&emsp;<input id="price" type="number" value="<%= foundShow.getPrice() %>"/>
+		<br>
+		Giảm giá (%):&emsp;<input id="discount-percentage" type="number" value="<%= foundShow.getDiscountPercentage() %>"/>
+		<br>
+		Chỗ ngồi:&emsp;
+		<%
+		if(seatList.isEmpty()) {
+		%>
+			<button type="button" onclick="generateSeat()">Tạo chỗ ngồi</button>
+		<%
+		} else {
+		%>
+			<%
+			for(Seat seat : seatList) {
+			%>
+				<%
+				if(seat.getAvailable()) {
+				%>
+				<span><%= seat.getSeatNumber() %></span>
+				<%
+				} else {
+				%>
+				<span style="color: red;"><%= seat.getSeatNumber() %></span>
+				<%
+				}
+				%>
+			<%
+			}
+			%>
+		<%
+		}
+		%>
+		<br>
 		<button type="button" onclick="submitFormUpdateShow()">Cập nhật</button>
 		<button type="button" onclick="deleteShow('<%= foundShow.getShowId() %>')">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
-	<br>
-	
-	<ul>
-		<%
-		for(Seat seat : seatList) {
-		%>
-		<li><%= seat.getSeatNumber() %></li>
-		<%
-		}
-		%>
-	</ul>
-	
 	<script>
+		function generateSeat() {
+			const id = document.getElementById("id").value;
+			
+			window.location.href = "./generateSeats?id=" + id;
+		}
+	
 		function submitFormUpdateShow() {
 			const form = document.getElementById("simple-form");
 			
 			const params = new URLSearchParams();
 		    params.append("idInput", document.getElementById("id").value);
 		    params.append("startAtInput", document.getElementById("start-at").value);
+		    params.append("priceInput", document.getElementById("price").value);
+		    params.append("discountPercentageInput", document.getElementById("discount-percentage").value);
 	
 		    fetch("./updateShow", {
 		        method: "POST",

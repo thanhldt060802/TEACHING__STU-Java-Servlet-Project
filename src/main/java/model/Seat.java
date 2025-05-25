@@ -5,19 +5,14 @@ public class Seat {
 	private Long seatId;
 	private Long showId;
 	private String seatNumber;
-	private Long price;
-	private Integer discountPercentage;
 	private Boolean available;
 	
 	public Seat() {}
 
-	public Seat(Long seatId, Long showId, String seatNumber, Long price, Integer discountPercentage,
-			Boolean available) {
+	public Seat(Long seatId, Long showId, String seatNumber, Boolean available) {
 		this.seatId = seatId;
 		this.showId = showId;
 		this.seatNumber = seatNumber;
-		this.price = price;
-		this.discountPercentage = discountPercentage;
 		this.available = available;
 	}
 
@@ -43,22 +38,6 @@ public class Seat {
 
 	public void setSeatNumber(String seatNumber) {
 		this.seatNumber = seatNumber;
-	}
-
-	public Long getPrice() {
-		return this.price;
-	}
-
-	public void setPrice(Long price) {
-		this.price = price;
-	}
-
-	public Integer getDiscountPercentage() {
-		return this.discountPercentage;
-	}
-
-	public void setDiscountPercentage(Integer discountPercentage) {
-		this.discountPercentage = discountPercentage;
 	}
 
 	public Boolean getAvailable() {

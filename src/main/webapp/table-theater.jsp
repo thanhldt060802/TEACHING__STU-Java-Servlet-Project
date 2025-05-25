@@ -74,8 +74,7 @@
 		}
 		
 		function resetForm() {
-		    document.getElementById("name").value = "";
-		    document.getElementById("location").value = "";
+			location.reload();
 		}
 	</script>
 	

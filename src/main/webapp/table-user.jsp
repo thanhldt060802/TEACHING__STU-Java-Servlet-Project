@@ -92,11 +92,7 @@
 		}
 		
 		function resetForm() {
-		    document.getElementById("full-name").value = "";
-		    document.getElementById("email").value = "";
-		    document.getElementById("username").value = "";
-		    document.getElementById("password").value = "";
-		    document.getElementById("role-name").value = "ADMIN";
+			location.reload();
 		}
 	</script>
 

@@ -27,8 +27,6 @@ public class SeatDAO {
 				seat.setSeatId(rsGetAllSeatsByShowId.getLong("seat_id"));
 				seat.setShowId(rsGetAllSeatsByShowId.getLong("show_id"));
 				seat.setSeatNumber(rsGetAllSeatsByShowId.getString("seat_number"));
-				seat.setPrice(rsGetAllSeatsByShowId.getLong("price"));
-				seat.setDiscountPercentage(rsGetAllSeatsByShowId.getInt("discount_percentage"));
 				seat.setAvailable(rsGetAllSeatsByShowId.getBoolean("available"));
 				seats.add(seat);
 			}
@@ -39,15 +37,13 @@ public class SeatDAO {
 	}
 				
 	public boolean createSeat(Seat newSeat) {
-		String sqlInsertSeat = "INSERT INTO seats(show_id, seat_number, price, discount_percentage, available) VALUES (?, ?, ?, ?, ?)";
+		String sqlInsertSeat = "INSERT INTO seats(show_id, seat_number, available) VALUES (?, ?, ?)";
 		try {
 			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertSeat = connection.prepareStatement(sqlInsertSeat);
 			statementInsertSeat.setLong(1, newSeat.getShowId());
 			statementInsertSeat.setString(2, newSeat.getSeatNumber());
-			statementInsertSeat.setLong(3, newSeat.getPrice());
-			statementInsertSeat.setInt(4, newSeat.getDiscountPercentage());
-			statementInsertSeat.setBoolean(5, newSeat.getAvailable());
+			statementInsertSeat.setBoolean(3, newSeat.getAvailable());
 
 			statementInsertSeat.executeUpdate();
 			return true;
