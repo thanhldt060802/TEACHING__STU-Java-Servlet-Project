@@ -74,6 +74,9 @@
 			const form = document.getElementById("simple-form");
 			
 		    const params = new URLSearchParams();
+		    params.append("movieIdInput", <%= foundMovie.getMovieId() %>);
+		    params.append("theaterIdInput", <%= foundTheater.getTheaterId() %>);
+		    params.append("showIdInput", <%= foundShow.getShowId() %>);
 		    document.querySelectorAll(".seats-choosen:checked").forEach((checkbox) => {
 				params.append("seatIdsInput", checkbox.value);
 			});
@@ -88,7 +91,7 @@
 				}
 
 				const quantity = parseInt(quantityInput.value);
-				if (!isNaN(quantity) && quantity > 0) {
+				if (quantity > 0) {
 					params.append("productIdsInput", productId);
 					params.append("quantity" + productId + "Input", quantity);
 				}

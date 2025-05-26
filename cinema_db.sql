@@ -61,7 +61,7 @@ CREATE TABLE products (
 
 -- Vé
 CREATE TABLE tickets (
-    ticket_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ticket_id BIGINT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     movie_id BIGINT NOT NULL,
     theater_id BIGINT NOT NULL,

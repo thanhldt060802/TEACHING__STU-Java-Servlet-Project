@@ -13,6 +13,28 @@ import model.Seat;
 
 public class SeatDAO {
 	
+	public Seat getSeatById(Long seatId) {
+		Seat foundSeat = null;
+		String sqlGetSeatById = "SELECT * FROM seats WHERE seat_id = ?";
+		try {
+			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementGetSeatById = connection.prepareStatement(sqlGetSeatById);
+			statementGetSeatById.setLong(1, seatId);
+			
+			ResultSet rsGetSeatById = statementGetSeatById.executeQuery();
+			if (rsGetSeatById.next()) {
+				foundSeat = new Seat();
+				foundSeat.setSeatId(rsGetSeatById.getLong("seat_id"));
+				foundSeat.setShowId(rsGetSeatById.getLong("show_id"));
+				foundSeat.setSeatNumber(rsGetSeatById.getString("seat_number"));
+				foundSeat.setAvailable(rsGetSeatById.getBoolean("available"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return foundSeat;
+	}
+	
 	public List<Seat> getSeatsByShowId(Long showId) {
 		List<Seat> seats = new ArrayList<Seat>();
 		String sqlGetAllSeatsByShowId = "SELECT * FROM seats WHERE show_id = ?";
