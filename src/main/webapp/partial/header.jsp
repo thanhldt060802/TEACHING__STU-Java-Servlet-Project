@@ -31,7 +31,7 @@ LỐI TẮT CHUNG:&emsp;&emsp;
 		<%
 		if(loginUser.getRoleName().equals("CUSTOMER")) {
 		%>
-		<a href="./myAccount">THÔNG TIN TÀI KHOẢN</a>&emsp;/&emsp;<a href="./myTicket">VÉ CỦA TÔI</a>&emsp;/&emsp;<a href="./logout">ĐĂNG XUẤT</a>
+		<a href="./myAccount">THÔNG TIN TÀI KHOẢN</a>&emsp;/&emsp;<a href="./myTickets">VÉ CỦA TÔI</a>&emsp;/&emsp;<a href="./logout">ĐĂNG XUẤT</a>
 		<%
 		} else {
 		%>

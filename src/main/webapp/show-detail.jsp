@@ -47,7 +47,7 @@
 				<%
 				for(Seat seat : seatList) {
 				%>
-				<input type="checkbox" class="seats-choosen" value="<%=seat.getSeatId() %>"><label><%=seat.getSeatNumber() %></label><br>
+				<input type="checkbox" class="seats-choosen" value="<%=seat.getSeatId() %> <%= seat.getAvailable() ? "" : "disabled" %>"><label><%=seat.getSeatNumber() %></label>&emsp;
 				<%
 				}
 				%>
@@ -83,7 +83,6 @@
 		    document.querySelectorAll(".products-choosen:checked").forEach((checkbox) => {
 				const productId = checkbox.value;
 
-				// Truy xuất input ngay gần checkbox (cùng cha)
 				const parent = checkbox.closest(".product-item");
 				const quantityInput = parent?.querySelector(".quantity-input");
 				if (!quantityInput) {

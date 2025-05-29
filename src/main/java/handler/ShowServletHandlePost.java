@@ -9,11 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.SeatDAO;
 import dao.ShowDAO;
-import model.Seat;
 import model.Show;
-import model.User;
 
 public class ShowServletHandlePost {
 	
@@ -42,7 +39,7 @@ public class ShowServletHandlePost {
 		newShow.setStartAt(startAt);
 		newShow.setPrice(price);
 		newShow.setDiscountPercentage(discountPercentage);
-		if(!this.showDAO.createShow(newShow)) {
+		if(!this.showDAO.createShow(newShow, null)) {
 			System.out.println("Create show failed");
 			response.sendRedirect("./getShows");
 			return;
@@ -69,7 +66,7 @@ public class ShowServletHandlePost {
 		foundShow.setPrice(price);
 		foundShow.setDiscountPercentage(discountPercentage);
 		
-		if(!this.showDAO.updateShow(foundShow)) {
+		if(!this.showDAO.updateShow(foundShow, null)) {
 			System.out.println("Update show failed");
 			response.sendRedirect("./getShowDetail?id=" + id);
 			return;

@@ -16,8 +16,8 @@ public class ProductDAO {
 	public List<Product> getProducts() {
 		List<Product> products = new ArrayList<Product>();
 		String sqlGetAllProducts = "SELECT * FROM products";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllProducts = connection.prepareStatement(sqlGetAllProducts);
 			
 			ResultSet rsGetAllProducts = statementGetAllProducts.executeQuery();
@@ -33,6 +33,12 @@ public class ProductDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return products;
 	}
@@ -40,8 +46,8 @@ public class ProductDAO {
 	public Product getProductById(Long id) {
 		Product foundProduct = null;
 		String sqlGetProductById = "SELECT * FROM products WHERE product_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetProductById = connection.prepareStatement(sqlGetProductById);
 			statementGetProductById.setLong(1, id);
 			
@@ -57,33 +63,53 @@ public class ProductDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return foundProduct;
 	}
 			
-	public boolean createProduct(Product newProduct) {
+	public boolean createProduct(Product newProduct, Connection refConnection) {
 		String sqlInsertProduct = "INSERT INTO products(name, image, price, discount_percentage, stock) VALUES (?, ?, ?, ?, ?)";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertProduct = connection.prepareStatement(sqlInsertProduct);
 			statementInsertProduct.setString(1, newProduct.getName());
 			statementInsertProduct.setString(2, newProduct.getImage());
 			statementInsertProduct.setLong(3, newProduct.getPrice());
 			statementInsertProduct.setInt(4, newProduct.getDiscountPercentage());
 			statementInsertProduct.setInt(5, newProduct.getStock());
-
 			statementInsertProduct.executeUpdate();
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
 		}
 		return false;
 	}
 	
-	public boolean updateProduct(Product updatedProduct) {
+	public boolean updateProduct(Product updatedProduct, Connection refConnection) {
 		String sqlUpdateProduct = "UPDATE products SET name = ?, image = ?, price = ?, discount_percentage = ?, stock= ? WHERE product_id = ?";
-        try {
-        	Connection connection = MySQLDB.getConnection();
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
+		try {
             PreparedStatement statementUpdateProduct = connection.prepareStatement(sqlUpdateProduct);
             statementUpdateProduct.setString(1, updatedProduct.getName());
             statementUpdateProduct.setString(2, updatedProduct.getImage());
@@ -91,27 +117,48 @@ public class ProductDAO {
             statementUpdateProduct.setInt(4, updatedProduct.getDiscountPercentage());
             statementUpdateProduct.setInt(5, updatedProduct.getStock());
             statementUpdateProduct.setLong(6, updatedProduct.getProductId());
-
             statementUpdateProduct.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 	
-	public boolean deleteProduct(Long id) {
+	public boolean deleteProduct(Long id, Connection refConnection) {
 		String sqlDeleteProduct = "DELETE FROM products WHERE product_id = ?";
-        try {
-        	Connection connection = MySQLDB.getConnection();
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
+        try {        	
+        	// Xoá tất cả những dữ liệu liên quan Product trước khi xoá Product vì Database liên kết
+        	
             PreparedStatement statementDeleteProduct = connection.prepareStatement(sqlDeleteProduct);
             statementDeleteProduct.setLong(1, id);
-            
             statementDeleteProduct.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 

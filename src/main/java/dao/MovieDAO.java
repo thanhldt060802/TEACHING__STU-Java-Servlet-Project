@@ -16,8 +16,8 @@ public class MovieDAO {
 	public List<Movie> getMovies() {
 		List<Movie> movies = new ArrayList<Movie>();
 		String sqlGetAllMovies = "SELECT * FROM movies";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllMovies = connection.prepareStatement(sqlGetAllMovies);
 			
 			ResultSet rsGetAllMovies = statementGetAllMovies.executeQuery();
@@ -33,6 +33,12 @@ public class MovieDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return movies;
 	}
@@ -40,8 +46,8 @@ public class MovieDAO {
 	public Movie getMovieById(Long id) {
 		Movie foundMovie = null;
 		String sqlGetMovieById = "SELECT * FROM movies WHERE movie_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetMovieById = connection.prepareStatement(sqlGetMovieById);
 			statementGetMovieById.setLong(1, id);
 			
@@ -57,33 +63,53 @@ public class MovieDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return foundMovie;
 	}
 			
-	public boolean createMovie(Movie newMovie) {
+	public boolean createMovie(Movie newMovie, Connection refConnection) {
 		String sqlInsertMovie = "INSERT INTO movies(title, image, genre, duration, release_date_at) VALUES (?, ?, ?, ?, ?)";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementInsertMovie = connection.prepareStatement(sqlInsertMovie);
 			statementInsertMovie.setString(1, newMovie.getTitle());
 			statementInsertMovie.setString(2, newMovie.getImage());
 			statementInsertMovie.setString(3, newMovie.getGenre());
 			statementInsertMovie.setInt(4, newMovie.getDuration());
 			statementInsertMovie.setTimestamp(5, newMovie.getReleaseDateAt());
-
 			statementInsertMovie.executeUpdate();
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
 		}
 		return false;
 	}
 	
-	public boolean updateMovie(Movie updatedMovie) {
+	public boolean updateMovie(Movie updatedMovie, Connection refConnection) {
 		String sqlUpdateMovie = "UPDATE movies SET title = ?, image = ?, genre = ?, duration = ?, release_date_at = ? WHERE movie_id = ?";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
         try {
-        	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateMovie = connection.prepareStatement(sqlUpdateMovie);
             statementUpdateMovie.setString(1, updatedMovie.getTitle());
             statementUpdateMovie.setString(2, updatedMovie.getImage());
@@ -91,27 +117,48 @@ public class MovieDAO {
             statementUpdateMovie.setInt(4, updatedMovie.getDuration());
             statementUpdateMovie.setTimestamp(5, updatedMovie.getReleaseDateAt());
             statementUpdateMovie.setLong(6, updatedMovie.getMovieId());
-
             statementUpdateMovie.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 	
-	public boolean deleteMovie(Long id) {
+	public boolean deleteMovie(Long id, Connection refConnection) {
 		String sqlDeleteMovie = "DELETE FROM movies WHERE movie_id = ?";
-        try {
-        	Connection connection = MySQLDB.getConnection();
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
+        try {        	
+        	// Xoá tất cả những dữ liệu liên quan Movie trước khi xoá Movie vì Database liên kết
+        	
             PreparedStatement statementDeleteMovie = connection.prepareStatement(sqlDeleteMovie);
             statementDeleteMovie.setLong(1, id);
-            
             statementDeleteMovie.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 

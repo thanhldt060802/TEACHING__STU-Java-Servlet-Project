@@ -24,7 +24,7 @@ public class TicketProduct {
 	}
 
 	public Long getTicketProductId() {
-		return ticketProductId;
+		return this.ticketProductId;
 	}
 
 	public void setTicketProductId(Long ticketProductId) {
@@ -32,7 +32,7 @@ public class TicketProduct {
 	}
 
 	public Long getTicketId() {
-		return ticketId;
+		return this.ticketId;
 	}
 
 	public void setTicketId(Long ticketId) {
@@ -40,7 +40,7 @@ public class TicketProduct {
 	}
 
 	public Long getProductId() {
-		return productId;
+		return this.productId;
 	}
 
 	public void setProductId(Long productId) {
@@ -48,7 +48,7 @@ public class TicketProduct {
 	}
 
 	public Long getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Long price) {
@@ -56,7 +56,7 @@ public class TicketProduct {
 	}
 
 	public Integer getDiscountPercentage() {
-		return discountPercentage;
+		return this.discountPercentage;
 	}
 
 	public void setDiscountPercentage(Integer discountPercentage) {
@@ -64,7 +64,7 @@ public class TicketProduct {
 	}
 
 	public Integer getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(Integer quantity) {
@@ -72,7 +72,7 @@ public class TicketProduct {
 	}
 
 	public Long getTotalPrice() {
-		return totalPrice;
+		return this.totalPrice;
 	}
 
 	public void setTotalPrice(Long totalPrice) {

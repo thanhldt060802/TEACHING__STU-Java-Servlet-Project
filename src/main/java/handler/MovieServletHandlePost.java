@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.MovieDAO;
 import model.Movie;
-import model.User;
 
 public class MovieServletHandlePost {
 	
@@ -40,7 +39,7 @@ public class MovieServletHandlePost {
 		newMovie.setGenre(genre);
 		newMovie.setDuration(duration);
 		newMovie.setReleaseDateAt(releaseDateAt);
-		if(!this.movieDAO.createMovie(newMovie)) {
+		if(!this.movieDAO.createMovie(newMovie, null)) {
 			System.out.println("Create movie failed");
 			response.sendRedirect("./getMovies");
 			return;
@@ -71,7 +70,7 @@ public class MovieServletHandlePost {
 		foundMovie.setDuration(duration);
 		foundMovie.setReleaseDateAt(releaseDateAt);
 		
-		if(!this.movieDAO.updateMovie(foundMovie)) {
+		if(!this.movieDAO.updateMovie(foundMovie, null)) {
 			System.out.println("Update movie failed");
 			response.sendRedirect("./getMovieDetail?id=" + id);
 			return;

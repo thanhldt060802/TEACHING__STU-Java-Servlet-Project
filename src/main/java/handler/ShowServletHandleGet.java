@@ -43,22 +43,13 @@ public class ShowServletHandleGet {
 		List<Show> showList = this.showDAO.getShows();
 		request.setAttribute("showList", showList);
 		
-		Function<Show, Long> keyMapper1 = (show) -> {
-			return show.getShowId();
-		};
-		Function<Show, String> valueMapper1 = (show) -> {
-			return this.movieDAO.getMovieById(show.getMovieId()).getTitle();
-		};
-		Map<Long, String> showIdMovieNameMap = showList.stream().collect(Collectors.toMap(keyMapper1, valueMapper1));
+
+		Map<Long, String> showIdMovieNameMap = showList.stream()
+				.collect(Collectors.toMap((show) -> show.getShowId(), (show) -> this.movieDAO.getMovieById(show.getMovieId()).getTitle()));
 		request.setAttribute("showIdMovieNameMap", showIdMovieNameMap);
 		
-		Function<Show, Long> keyMapper2 = (show) -> {
-			return show.getShowId();
-		};
-		Function<Show, String> valueMapper2 = (show) -> {
-			return this.theaterDAO.getTheaterById(show.getTheaterId()).getName();
-		};
-		Map<Long, String> showIdTheaterNameMap = showList.stream().collect(Collectors.toMap(keyMapper2, valueMapper2));
+		Map<Long, String> showIdTheaterNameMap = showList.stream()
+				.collect(Collectors.toMap((show) -> show.getShowId(), (show) -> this.theaterDAO.getTheaterById(show.getTheaterId()).getName()));
 		request.setAttribute("showIdTheaterNameMap", showIdTheaterNameMap);
 		
 		List<Movie> movieList = this.movieDAO.getMovies();
@@ -111,7 +102,7 @@ public class ShowServletHandleGet {
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("id"));
 		
-		if(!this.showDAO.deleteShow(id)) {
+		if(!this.showDAO.deleteShow(id, null)) {
 			System.out.println("Delete show failed");
 			response.sendRedirect("./getShows");
 			return;
@@ -121,26 +112,4 @@ public class ShowServletHandleGet {
 		response.sendRedirect("./getShows");
 	}
 	
-	public void handleGenerateSeats(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Long id = Long.parseLong(request.getParameter("id"));
-		
-		for(char c = 'A'; c <= 'E'; c++) {
-			for(int i = 1; i <= 5; i++) {
-				Seat newSeat = new Seat();
-				newSeat.setShowId(id);
-				newSeat.setSeatNumber(String.format("%c%d", c, i));
-				newSeat.setAvailable(true);
-				if(!this.seatDAO.createSeat(newSeat)) {
-					System.out.println("Generate seats failed");
-					response.sendRedirect("./getShowDetail?id=" + id);
-					return;
-				}
-			}
-		}
-		
-		System.out.println("Generate seats successful");
-		response.sendRedirect("./getShowDetail?id=" + id);
-	}
-
 }

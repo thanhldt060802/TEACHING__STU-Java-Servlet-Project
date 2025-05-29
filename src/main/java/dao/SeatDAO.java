@@ -13,33 +13,11 @@ import model.Seat;
 
 public class SeatDAO {
 	
-	public Seat getSeatById(Long seatId) {
-		Seat foundSeat = null;
-		String sqlGetSeatById = "SELECT * FROM seats WHERE seat_id = ?";
-		try {
-			Connection connection = MySQLDB.getConnection();
-			PreparedStatement statementGetSeatById = connection.prepareStatement(sqlGetSeatById);
-			statementGetSeatById.setLong(1, seatId);
-			
-			ResultSet rsGetSeatById = statementGetSeatById.executeQuery();
-			if (rsGetSeatById.next()) {
-				foundSeat = new Seat();
-				foundSeat.setSeatId(rsGetSeatById.getLong("seat_id"));
-				foundSeat.setShowId(rsGetSeatById.getLong("show_id"));
-				foundSeat.setSeatNumber(rsGetSeatById.getString("seat_number"));
-				foundSeat.setAvailable(rsGetSeatById.getBoolean("available"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return foundSeat;
-	}
-	
 	public List<Seat> getSeatsByShowId(Long showId) {
 		List<Seat> seats = new ArrayList<Seat>();
 		String sqlGetAllSeatsByShowId = "SELECT * FROM seats WHERE show_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllSeatsByShowId = connection.prepareStatement(sqlGetAllSeatsByShowId);
 			statementGetAllSeatsByShowId.setLong(1, showId);
 			
@@ -54,55 +32,124 @@ public class SeatDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return seats;
 	}
-				
-	public boolean createSeat(Seat newSeat) {
-		String sqlInsertSeat = "INSERT INTO seats(show_id, seat_number, available) VALUES (?, ?, ?)";
+	
+	public Seat getSeatById(Long seatId) {
+		Seat foundSeat = null;
+		String sqlGetSeatById = "SELECT * FROM seats WHERE seat_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
+			PreparedStatement statementGetSeatById = connection.prepareStatement(sqlGetSeatById);
+			statementGetSeatById.setLong(1, seatId);
+			
+			ResultSet rsGetSeatById = statementGetSeatById.executeQuery();
+			if (rsGetSeatById.next()) {
+				foundSeat = new Seat();
+				foundSeat.setSeatId(rsGetSeatById.getLong("seat_id"));
+				foundSeat.setShowId(rsGetSeatById.getLong("show_id"));
+				foundSeat.setSeatNumber(rsGetSeatById.getString("seat_number"));
+				foundSeat.setAvailable(rsGetSeatById.getBoolean("available"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
+		}
+		return foundSeat;
+	}
+				
+	public boolean createSeat(Seat newSeat, Connection refConnection) {
+		String sqlInsertSeat = "INSERT INTO seats(show_id, seat_number, available) VALUES (?, ?, ?)";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
+		try {
 			PreparedStatement statementInsertSeat = connection.prepareStatement(sqlInsertSeat);
 			statementInsertSeat.setLong(1, newSeat.getShowId());
 			statementInsertSeat.setString(2, newSeat.getSeatNumber());
 			statementInsertSeat.setBoolean(3, newSeat.getAvailable());
-
 			statementInsertSeat.executeUpdate();
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
 		}
 		return false;
 	}
 	
-	public boolean updateSeat(Seat updatedSeat) {
+	public boolean updateSeat(Seat updatedSeat, Connection refConnection) {
 		String sqlUpdateSeat = "UPDATE seats SET available = ? WHERE seat_id = ?";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
         try {
-        	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateSeat = connection.prepareStatement(sqlUpdateSeat);
             statementUpdateSeat.setBoolean(1, updatedSeat.getAvailable());
             statementUpdateSeat.setLong(2, updatedSeat.getSeatId());
-
             statementUpdateSeat.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 	
-	public boolean deleteSeat(Long id) {
+	public boolean deleteSeat(Long id, Connection refConnection) {
 		String sqlDeleteSeat = "DELETE FROM seats WHERE seat_id = ?";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
         try {
-        	Connection connection = MySQLDB.getConnection();
+        	// Xoá tất cả những dữ liệu liên quan Seat trước khi xoá Seat vì Database liên kết
+        	
             PreparedStatement statementDeleteSeat = connection.prepareStatement(sqlDeleteSeat);
             statementDeleteSeat.setLong(1, id);
-            
             statementDeleteSeat.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 

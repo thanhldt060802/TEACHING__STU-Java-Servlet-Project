@@ -1,9 +1,6 @@
 package handler;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +25,7 @@ private TheaterDAO theaterDAO;
 		Theater newTheater = new Theater();
 		newTheater.setName(name);
 		newTheater.setLocation(location);
-		if(!this.theaterDAO.createTheater(newTheater)) {
+		if(!this.theaterDAO.createTheater(newTheater, null)) {
 			System.out.println("Create theater failed");
 			response.sendRedirect("./getTheaters");
 			return;
@@ -48,7 +45,7 @@ private TheaterDAO theaterDAO;
 		foundTheater.setName(name);
 		foundTheater.setLocation(location);
 		
-		if(!this.theaterDAO.updateTheater(foundTheater)) {
+		if(!this.theaterDAO.updateTheater(foundTheater, null)) {
 			System.out.println("Update theater failed");
 			response.sendRedirect("./getTheaterDetail?id=" + id);
 			return;

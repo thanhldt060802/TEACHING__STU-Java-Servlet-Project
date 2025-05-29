@@ -18,7 +18,7 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= foundUser.getUserId() %>" readonly="readonly"/>
+		Mã số người dùng:&emsp;<input id="id" type="text" value="<%= foundUser.getUserId() %>" readonly="readonly"/>
 		<br>
 		Họ và tên:&emsp;<input id="full-name" type="text" value="<%= foundUser.getFullName() %>"/>
 		<br>
@@ -32,7 +32,7 @@
 		</select>
 		<br>
 		<button type="button" onclick="submitFormUpdateUser()">Cập nhật</button>
-		<button type="button" onclick="deleteUser('<%= foundUser.getUserId() %>')">Xoá</button>
+		<button type="button" onclick="deleteUser()">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
@@ -64,8 +64,8 @@
 		    });
 		}
 		
-		function deleteUser(id) {
-			window.location.href = "./deleteUser?id=" + id
+		function deleteUser() {
+			window.location.href = "./deleteUser?id=" + <%= foundUser.getUserId() %>
 		}
 		
 		function resetForm() {

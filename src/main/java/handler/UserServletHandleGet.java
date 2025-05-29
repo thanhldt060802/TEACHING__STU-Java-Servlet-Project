@@ -68,9 +68,9 @@ public class UserServletHandleGet {
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("id"));
 		
-		if(!this.userDAO.deleteUser(id)) {
+		if(!this.userDAO.deleteUser(id, null)) {
 			System.out.println("Delete user failed");
-			response.sendRedirect("./getUserDetail?id=" + id);
+			response.sendRedirect("./getUsers");
 			return;
 		}
 		

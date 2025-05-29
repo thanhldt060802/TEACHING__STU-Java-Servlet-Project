@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.ProductDAO;
 import model.Product;
-import model.User;
 
 public class ProductServletHandleGet {
 	
@@ -51,7 +50,7 @@ public class ProductServletHandleGet {
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("id"));
 		
-		if(!this.productDAO.deleteProduct(id)) {
+		if(!this.productDAO.deleteProduct(id, null)) {
 			System.out.println("Delete product failed");
 			response.sendRedirect("./getProducts");
 			return;

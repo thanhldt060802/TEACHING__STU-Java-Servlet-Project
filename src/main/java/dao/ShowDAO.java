@@ -14,11 +14,17 @@ import model.Show;
 
 public class ShowDAO {
 	
+	private SeatDAO seatDAO;
+	
+	public ShowDAO() {
+		this.seatDAO = new SeatDAO();
+	}
+	
 	public List<Show> getShows() {
 		List<Show> shows = new ArrayList<Show>();
 		String sqlGetAllShows = "SELECT * FROM shows";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllShows = connection.prepareStatement(sqlGetAllShows);
 			
 			ResultSet rsGetAllShows = statementGetAllShows.executeQuery();
@@ -34,6 +40,12 @@ public class ShowDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return shows;
 	}
@@ -41,8 +53,8 @@ public class ShowDAO {
 	public List<Show> getShowsByMovieId(Long movieId) {
 		List<Show> shows = new ArrayList<Show>();
 		String sqlGetAllShowsByMovieId = "SELECT * FROM shows WHERE movie_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllShowsByMovieId = connection.prepareStatement(sqlGetAllShowsByMovieId);
 			statementGetAllShowsByMovieId.setLong(1, movieId);
 			
@@ -59,6 +71,12 @@ public class ShowDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return shows;
 	}
@@ -66,8 +84,8 @@ public class ShowDAO {
 	public List<Show> getShowsByTheaterId(Long theaterId) {
 		List<Show> shows = new ArrayList<Show>();
 		String sqlGetAllShowsByTheaterId = "SELECT * FROM shows WHERE theater_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetAllShowsByTheaterId = connection.prepareStatement(sqlGetAllShowsByTheaterId);
 			statementGetAllShowsByTheaterId.setLong(1, theaterId);
 			
@@ -84,6 +102,12 @@ public class ShowDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return shows;
 	}
@@ -91,8 +115,8 @@ public class ShowDAO {
 	public Show getShowById(Long id) {
 		Show foundShow = null;
 		String sqlGetShowById = "SELECT * FROM shows WHERE show_id = ?";
+		Connection connection = MySQLDB.getConnection();
 		try {
-			Connection connection = MySQLDB.getConnection();
 			PreparedStatement statementGetShowById = connection.prepareStatement(sqlGetShowById);
 			statementGetShowById.setLong(1, id);
 			
@@ -105,63 +129,126 @@ public class ShowDAO {
 				foundShow.setStartAt(rsGetShowById.getTimestamp("start_at"));
 				foundShow.setPrice(rsGetShowById.getLong("price"));
 				foundShow.setDiscountPercentage(rsGetShowById.getInt("discount_percentage"));
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+                connection.close();
+	        } catch (SQLException closeEx) {
+	            closeEx.printStackTrace();
+	        }
 		}
 		return foundShow;
 	}
 			
-	public boolean createShow(Show newShow) {
-		String sqlInsertShow = "INSERT INTO shows(movie_id, theater_id, start_at, price, discount_percentage) VALUES (?, ?, ?, ?, ?)";
+	public boolean createShow(Show newShow, Connection refConnection) {
+		String sqlInsertShow = "INSERT INTO shows (show_id, movie_id, theater_id, start_at, price, discount_percentage) VALUES (?, ?, ?, ?, ?, ?)";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
 		try {
-			Connection connection = MySQLDB.getConnection();
+			connection.setAutoCommit(false);
+			
 			PreparedStatement statementInsertShow = connection.prepareStatement(sqlInsertShow);
-			statementInsertShow.setLong(1, newShow.getMovieId());
-			statementInsertShow.setLong(2, newShow.getTheaterId());
-			statementInsertShow.setTimestamp(3, newShow.getStartAt());
-			statementInsertShow.setLong(4, newShow.getPrice());
-			statementInsertShow.setInt(5, newShow.getDiscountPercentage());
-
+			statementInsertShow.setLong(1, newShow.getShowId());
+			statementInsertShow.setLong(2, newShow.getMovieId());
+			statementInsertShow.setLong(3, newShow.getTheaterId());
+			statementInsertShow.setTimestamp(4, newShow.getStartAt());
+			statementInsertShow.setLong(5, newShow.getPrice());
+			statementInsertShow.setInt(6, newShow.getDiscountPercentage());
 			statementInsertShow.executeUpdate();
+			
+			for(char c = 'A'; c <= 'C'; c++) {
+				for(int i = 1; i <= 2; i++) {
+					Seat newSeat = new Seat();
+					newSeat.setShowId(newShow.getShowId());
+					newSeat.setSeatNumber(String.format("%c%d", c, i));
+					newSeat.setAvailable(true);
+					if(!this.seatDAO.createSeat(newSeat, connection)) {
+						connection.rollback();
+						return false;
+					}
+				}
+			}
+
+			connection.commit();
 			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			try {
+				connection.rollback();
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+		} finally {
+			if(refConnection == null) {
+				try {
+					connection.setAutoCommit(true);
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
 		}
 		return false;
 	}
 	
-	public boolean updateShow(Show updatedShow) {
+	public boolean updateShow(Show updatedShow, Connection refConnection) {
 		String sqlUpdateShow = "UPDATE shows SET start_at = ?, price = ?, discount_percentage = ? WHERE show_id = ?";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
         try {
-        	Connection connection = MySQLDB.getConnection();
             PreparedStatement statementUpdateShow = connection.prepareStatement(sqlUpdateShow);
             statementUpdateShow.setTimestamp(1, updatedShow.getStartAt());
             statementUpdateShow.setLong(2,  updatedShow.getPrice());
             statementUpdateShow.setInt(3, updatedShow.getDiscountPercentage());
             statementUpdateShow.setLong(4, updatedShow.getShowId());
-
             statementUpdateShow.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 	
-	public boolean deleteShow(Long id) {
+	public boolean deleteShow(Long id, Connection refConnection) {
 		String sqlDeleteShow = "DELETE FROM shows WHERE show_id = ?";
+		Connection connection = refConnection;
+		if(connection == null) {
+			connection = MySQLDB.getConnection();
+		}
         try {
-        	Connection connection = MySQLDB.getConnection();
+        	// Xoá tất cả những dữ liệu liên quan Show trước khi xoá Show vì Database liên kết
+        	
             PreparedStatement statementDeleteShow = connection.prepareStatement(sqlDeleteShow);
             statementDeleteShow.setLong(1, id);
-            
             statementDeleteShow.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+			if(refConnection == null) {
+				try {
+	                connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
         return false;
 	}
 

@@ -9,21 +9,21 @@ public class Ticket {
 	private Long movieId;
 	private Long theaterId;
 	private Long totalAmount;
-	private Timestamp createAt;
+	private Timestamp createdAt;
 	
 	public Ticket() {}
 	
-	public Ticket(Long ticketId, Long userId, Long movieId, Long theaterId, Long totalAmount, Timestamp createAt) {
+	public Ticket(Long ticketId, Long userId, Long movieId, Long theaterId, Long totalAmount, Timestamp createdAt) {
 		this.ticketId = ticketId;
 		this.userId = userId;
 		this.movieId = movieId;
 		this.theaterId = theaterId;
 		this.totalAmount = totalAmount;
-		this.createAt = createAt;
+		this.createdAt = createdAt;
 	}
 
 	public Long getTicketId() {
-		return ticketId;
+		return this.ticketId;
 	}
 
 	public void setTicketId(Long ticketId) {
@@ -31,7 +31,7 @@ public class Ticket {
 	}
 
 	public Long getUserId() {
-		return userId;
+		return this.userId;
 	}
 
 	public void setUserId(Long userId) {
@@ -39,7 +39,7 @@ public class Ticket {
 	}
 
 	public Long getMovieId() {
-		return movieId;
+		return this.movieId;
 	}
 
 	public void setMovieId(Long movieId) {
@@ -47,7 +47,7 @@ public class Ticket {
 	}
 
 	public Long getTheaterId() {
-		return theaterId;
+		return this.theaterId;
 	}
 
 	public void setTheaterId(Long theaterId) {
@@ -55,19 +55,19 @@ public class Ticket {
 	}
 
 	public Long getTotalAmount() {
-		return totalAmount;
+		return this.totalAmount;
 	}
 
 	public void setTotalAmount(Long totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public Timestamp getCreateAt() {
-		return createAt;
+	public Timestamp getCreatedAt() {
+		return this.createdAt;
 	}
 
-	public void setCreateAt(Timestamp createAt) {
-		this.createAt = createAt;
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }

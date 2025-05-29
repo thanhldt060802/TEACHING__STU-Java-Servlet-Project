@@ -37,14 +37,7 @@
 		<br>
 		Giảm giá (%):&emsp;<input id="discount-percentage" type="number" value="<%= foundShow.getDiscountPercentage() %>"/>
 		<br>
-		Chỗ ngồi:&emsp;
-		<%
-		if(seatList.isEmpty()) {
-		%>
-			<button type="button" onclick="generateSeat()">Tạo chỗ ngồi</button>
-		<%
-		} else {
-		%>
+		Chỗ ngồi:
 			<%
 			for(Seat seat : seatList) {
 			%>
@@ -62,12 +55,9 @@
 			<%
 			}
 			%>
-		<%
-		}
-		%>
 		<br>
 		<button type="button" onclick="submitFormUpdateShow()">Cập nhật</button>
-		<button type="button" onclick="deleteShow('<%= foundShow.getShowId() %>')">Xoá</button>
+		<button type="button" onclick="deleteShow()">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
@@ -105,8 +95,8 @@
 		    });
 		}
 		
-		function deleteShow(id) {
-			window.location.href = "./deleteShow?id=" + id
+		function deleteShow() {
+			window.location.href = "./deleteShow?id=" + <%= foundShow.getShowId() %>
 		}
 		
 		function resetForm() {

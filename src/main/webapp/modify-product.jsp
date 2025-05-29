@@ -17,7 +17,7 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= foundProduct.getProductId() %>" readonly="readonly"/>
+		Mã số sản phẩm:&emsp;<input id="id" type="text" value="<%= foundProduct.getProductId() %>" readonly="readonly"/>
 		<br>
 		Tên sản phẩm:&emsp;<input id="name" type="text" value="<%= foundProduct.getName() %>"/>
 		<br>
@@ -30,7 +30,7 @@
 		Số lượng:&emsp;<input id="stock" type="number" value="<%= foundProduct.getStock() %>"/>
 		<br>
 		<button type="button" onclick="submitFormUpdateProduct()">Cập nhật</button>
-		<button type="button" onclick="deleteProduct('<%= foundProduct.getProductId() %>')">Xoá</button>
+		<button type="button" onclick="deleteProduct()">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
@@ -64,8 +64,8 @@
 		    });
 		}
 		
-		function deleteMovie(id) {
-			window.location.href = "./deleteProduct?id=" + id
+		function deleteMovie() {
+			window.location.href = "./deleteProduct?id=" + <%= foundProduct.getProductId() %>
 		}
 		
 		function resetForm() {

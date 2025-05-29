@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MovieDAO;
-import dao.SeatDAO;
 import dao.ShowDAO;
 import dao.TheaterDAO;
 import model.Movie;
@@ -85,7 +83,7 @@ public class TheaterServletHandleGet {
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("id"));
 		
-		if(!this.theaterDAO.deleteTheater(id)) {
+		if(!this.theaterDAO.deleteTheater(id, null)) {
 			System.out.println("Delete theater failed");
 			response.sendRedirect("./getTheaters");
 			return;

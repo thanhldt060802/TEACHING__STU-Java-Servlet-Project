@@ -1,16 +1,12 @@
 package handler;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ProductDAO;
-import model.Movie;
 import model.Product;
 
 public class ProductServletHandlePost {
@@ -35,7 +31,7 @@ public class ProductServletHandlePost {
 		newProduct.setPrice(price);
 		newProduct.setDiscountPercentage(discountPercentage);
 		newProduct.setStock(stock);
-		if(!this.productDAO.createProduct(newProduct)) {
+		if(!this.productDAO.createProduct(newProduct, null)) {
 			System.out.println("Create product failed");
 			response.sendRedirect("./getProducts");
 			return;
@@ -61,7 +57,7 @@ public class ProductServletHandlePost {
 		foundProduct.setDiscountPercentage(discountPercentage);
 		foundProduct.setStock(stock);
 		
-		if(!this.productDAO.updateProduct(foundProduct)) {
+		if(!this.productDAO.updateProduct(foundProduct, null)) {
 			System.out.println("Update product failed");
 			response.sendRedirect("./getProductDetail?id=" + id);
 			return;

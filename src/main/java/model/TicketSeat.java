@@ -7,19 +7,21 @@ public class TicketSeat {
 	private Long seatId;
 	private Long price;
 	private Integer discountPercentage;
+	private Long totalPrice;
 	
 	public TicketSeat() {}
 
-	public TicketSeat(Long ticketSeatId, Long ticketId, Long seatId, Long price, Integer discountPercentage) {
+	public TicketSeat(Long ticketSeatId, Long ticketId, Long seatId, Long price, Integer discountPercentage, Long totalPrice) {
 		this.ticketSeatId = ticketSeatId;
 		this.ticketId = ticketId;
 		this.seatId = seatId;
 		this.price = price;
 		this.discountPercentage = discountPercentage;
+		this.totalPrice = totalPrice;
 	}
 
 	public Long getTicketSeatId() {
-		return ticketSeatId;
+		return this.ticketSeatId;
 	}
 
 	public void setTicketSeatId(Long ticketSeatId) {
@@ -27,7 +29,7 @@ public class TicketSeat {
 	}
 
 	public Long getTicketId() {
-		return ticketId;
+		return this.ticketId;
 	}
 
 	public void setTicketId(Long ticketId) {
@@ -35,7 +37,7 @@ public class TicketSeat {
 	}
 
 	public Long getSeatId() {
-		return seatId;
+		return this.seatId;
 	}
 
 	public void setSeatId(Long seatId) {
@@ -43,7 +45,7 @@ public class TicketSeat {
 	}
 
 	public Long getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Long price) {
@@ -51,11 +53,19 @@ public class TicketSeat {
 	}
 
 	public Integer getDiscountPercentage() {
-		return discountPercentage;
+		return this.discountPercentage;
 	}
 
 	public void setDiscountPercentage(Integer discountPercentage) {
 		this.discountPercentage = discountPercentage;
+	}
+	
+	public Long getTotalPrice() {
+		return this.totalPrice;
+	}
+	
+	public void setTotalPrice(Long totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
 }

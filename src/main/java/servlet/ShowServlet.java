@@ -11,7 +11,7 @@ import handler.ShowServletHandleGet;
 import handler.ShowServletHandlePost;
 
 
-@WebServlet({ "/getShows", "/getShowDetail", "/createShow", "/updateShow", "/deleteShow", "/generateSeats" })
+@WebServlet({ "/getShows", "/getShowDetail", "/createShow", "/updateShow", "/deleteShow" })
 public class ShowServlet extends HttpServlet {
 	
 	private ShowServletHandleGet handleGet;
@@ -22,7 +22,6 @@ public class ShowServlet extends HttpServlet {
 	private static final String CREATE_SHOW_PATTERN = "/createShow";  // GET & POST
 	private static final String UPDATE_SHOW_PATTERN = "/updateShow";  // GET & POST
 	private static final String DELETE_SHOW_PATTERN = "/deleteShow";  // GET
-	private static final String GENERATE_SEATS_PATTERN = "/generateSeats";  // GET
 
     public ShowServlet() {
     	this.handleGet = new ShowServletHandleGet();
@@ -54,10 +53,6 @@ public class ShowServlet extends HttpServlet {
 			this.handleGet.handleDeleteShow(request, response);
 			break;
 			
-		case GENERATE_SEATS_PATTERN:
-			this.handleGet.handleGenerateSeats(request, response);
-			break;
-
 		}
 	}
 

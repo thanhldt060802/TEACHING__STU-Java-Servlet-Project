@@ -18,7 +18,7 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= foundMovie.getMovieId() %>" readonly="readonly"/>
+		Mã số phim:&emsp;<input id="id" type="text" value="<%= foundMovie.getMovieId() %>" readonly="readonly"/>
 		<br>
 		Tên phim:&emsp;<input id="title" type="text" value="<%= foundMovie.getTitle() %>"/>
 		<br>
@@ -31,7 +31,7 @@
 		Khởi chiếu:&emsp;<input id="release-date-at" type="date" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(foundMovie.getReleaseDateAt()) %>"/>
 		<br>
 		<button type="button" onclick="submitFormUpdateMovie()">Cập nhật</button>
-		<button type="button" onclick="deleteMovie('<%= foundMovie.getMovieId() %>')">Xoá</button>
+		<button type="button" onclick="deleteMovie()">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
@@ -65,8 +65,8 @@
 		    });
 		}
 		
-		function deleteMovie(id) {
-			window.location.href = "./deleteMovie?id=" + id
+		function deleteMovie() {
+			window.location.href = "./deleteMovie?id=" + <%= foundMovie.getMovieId() %>
 		}
 		
 		function resetForm() {

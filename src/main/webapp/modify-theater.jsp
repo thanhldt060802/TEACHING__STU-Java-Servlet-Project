@@ -17,14 +17,14 @@
 	%>
 		
 	<form id="simple-form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
-		Id:&emsp;<input id="id" type="text" value="<%= foundTheater.getTheaterId() %>" readonly="readonly"/>
+		Mã số rạp:&emsp;<input id="id" type="text" value="<%= foundTheater.getTheaterId() %>" readonly="readonly"/>
 		<br>
 		Tên rạp:&emsp;<input id="name" type="text" value="<%= foundTheater.getName() %>"/>
 		<br>
 		Địa điểm:&emsp;<input id="location" type="text" value="<%= foundTheater.getLocation() %>"/>
 		<br>
 		<button type="button" onclick="submitFormUpdateTheater()">Cập nhật</button>
-		<button type="button" onclick="deleteTheater('<%= foundTheater.getTheaterId() %>')">Xoá</button>
+		<button type="button" onclick="deleteTheater()">Xoá</button>
 		<button type="button" onclick="resetForm()">Làm mới</button>
 	</form>
 	
@@ -55,8 +55,8 @@
 		    });
 		}
 		
-		function deleteMovie(id) {
-			window.location.href = "./deleteTheater?id=" + id
+		function deleteMovie() {
+			window.location.href = "./deleteTheater?id=" + <%= foundTheater.getTheaterId() %>
 		}
 		
 		function resetForm() {

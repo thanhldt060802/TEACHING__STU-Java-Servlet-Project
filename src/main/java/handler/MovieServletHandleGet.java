@@ -1,7 +1,6 @@
 package handler;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class MovieServletHandleGet {
 			throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("id"));
 		
-		if(!this.movieDAO.deleteMovie(id)) {
+		if(!this.movieDAO.deleteMovie(id, null)) {
 			System.out.println("Delete movie failed");
 			response.sendRedirect("./getMovies");
 			return;

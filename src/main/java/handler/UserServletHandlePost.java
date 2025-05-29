@@ -1,7 +1,17 @@
 package handler;
 
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.Message.RecipientType;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +77,7 @@ public class UserServletHandlePost {
 		newUser.setUsername(username);
 		newUser.setPassword(password);
 		newUser.setRoleName("CUSTOMER");
-		if(!this.userDAO.createUser(newUser)) {
+		if(!this.userDAO.createUser(newUser, null)) {
 			System.out.println("Register failed");
 			response.sendRedirect("./register");
 			return;
@@ -103,7 +113,7 @@ public class UserServletHandlePost {
 		newUser.setUsername(username);
 		newUser.setPassword(password);
 		newUser.setRoleName(roleName);
-		if(!this.userDAO.createUser(newUser)) {
+		if(!this.userDAO.createUser(newUser, null)) {
 			System.out.println("Create user failed");
 			response.sendRedirect("./getUsers");
 			return;
@@ -133,7 +143,7 @@ public class UserServletHandlePost {
 		}
 		foundUser.setRoleName(roleName);
 		
-		if(!this.userDAO.updateUser(foundUser)) {
+		if(!this.userDAO.updateUser(foundUser, null)) {
 			System.out.println("Update user failed");
 			response.sendRedirect("./getUserDetail?id=" + id);
 			return;
@@ -165,7 +175,7 @@ public class UserServletHandlePost {
 			loginUser.setPassword(password);
 		}
 		
-		if(!this.userDAO.updateUser(loginUser)) {
+		if(!this.userDAO.updateUser(loginUser, null)) {
 			System.out.println("Update account failed");
 			response.sendRedirect("./myAccount");
 			return;
@@ -188,10 +198,65 @@ public class UserServletHandlePost {
 			return;
 		}
 		
+		foundUser.setPassword("123");
+		if(!this.userDAO.updateUser(foundUser, null)) {
+			System.out.println("Reset password failed");
+			response.sendRedirect("./retrievePassword");
+			return;
+		}
+		
 		// Send Email
+		String fromEmail = "from@gmail.com";
+		String password = "app_pass";
+		String toEmail = foundUser.getEmail();
+		String subject = "RETRIEVE PASSWORD";
+		String body = "Your new passowrd: " + foundUser.getPassword();;
+		this.sendEmail(fromEmail, password, toEmail, subject, body);
 		
 		System.out.println("Check your email");
 		response.sendRedirect("./retrievePassword");
+	}
+	
+	private void sendEmail(String fromEmail, String password, String toEmail, String subject, String body) {
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
+		Authenticator authenticator = new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(fromEmail, password);
+			}
+		};
+		Session session = Session.getInstance(props, authenticator);
+		
+		try {
+			// Tạo message
+			Message message = new MimeMessage(session);
+			
+			// Đặt người gửi
+			message.setFrom(new InternetAddress(fromEmail));
+			
+			// Đặt người nhận
+			message.setRecipient(RecipientType.TO, new InternetAddress(toEmail));
+			
+			// Đặt tiều đề
+			message.setSubject(subject);
+			
+			// Đặt nội dung
+			message.setText(body);
+			
+			// Gửi mail
+			Transport.send(message);
+			
+			System.out.println("Send email successful");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
