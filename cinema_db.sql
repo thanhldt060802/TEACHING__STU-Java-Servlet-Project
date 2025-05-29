@@ -97,7 +97,6 @@ CREATE TABLE ticket_products (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
-
 -- INSERT DATA
 
 INSERT INTO users (full_name, email, username, `password`, role_name) VALUES

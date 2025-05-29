@@ -11,7 +11,7 @@ import handler.TicketServletHandleGet;
 import handler.TicketServletHandlePost;
 
 
-@WebServlet({ "/getTickets", "/getTicketDetail", "/createTicket", "/deleteTicket", "/myTickets", "myTicketDetail" })
+@WebServlet({ "/getTickets", "/getTicketDetail", "/createTicket", "/deleteTicket", "/myTickets", "/myTicketDetail" })
 public class TicketServlet extends HttpServlet {
 	
 	private TicketServletHandleGet handleGet;

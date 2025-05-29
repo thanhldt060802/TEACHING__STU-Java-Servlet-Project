@@ -10,11 +10,13 @@ import infrastructure.MySQLDB;
 public class AppContextListener implements ServletContextListener {
 
 	public void contextDestroyed(ServletContextEvent sce) {
-		MySQLDB.closeConnection();
+		System.out.println("Đóng kết nối đến các ứng dụng thứ 3 khác");
+		
+		MySQLDB.deregisterJDBC();
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-		MySQLDB.openConnection();
+		System.out.println("Mở kết nối đến các ứng dụng thứ 3 khác");
 	}
 
 }

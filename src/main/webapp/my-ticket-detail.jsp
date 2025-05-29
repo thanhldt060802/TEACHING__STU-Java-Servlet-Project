@@ -38,7 +38,7 @@
 		<br>
 		Tổng giá tiền (VNĐ):&emsp;<input id="total-amount" type="text" value="<%= foundTicket.getTotalAmount() %>" readonly="readonly"/>
 		<br>
-		Ngày tạo:&emsp;<input id="created-at" type="date" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(foundTicket.getCreatedAt()) %>" readonly="readonly"/>
+		Ngày tạo:&emsp;<input id="created-at" type="date" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(foundTicket.getCreatedAt()) %>" readonly="readonly"/>
 		<br>
 	</form>
 	

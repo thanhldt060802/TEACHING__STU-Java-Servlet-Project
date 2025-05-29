@@ -53,8 +53,6 @@ public class TicketServletHandlePost {
 		    }
 		}
 		
-		
-				
 		User loginUser = (User)request.getSession().getAttribute("loginUser");
 		
 		Ticket newTicket = new Ticket();
@@ -86,21 +84,23 @@ public class TicketServletHandlePost {
 		}
 		
 		Map<TicketProduct, Product> ticketProductMap = new HashMap<TicketProduct, Product>();
-		for(String productId : productIds) {
-			Product foundProduct = this.productDAO.getProductById(Long.parseLong(productId));
-			foundProduct.setStock(foundProduct.getStock() - productQuantities.get(productId));
-			
-			TicketProduct newTicketProduct = new TicketProduct();
-			newTicketProduct.setTicketId(newTicket.getTicketId());
-			newTicketProduct.setProductId(foundProduct.getProductId());
-			newTicketProduct.setPrice(foundProduct.getPrice());
-			newTicketProduct.setDiscountPercentage(foundProduct.getDiscountPercentage());
-			newTicketProduct.setQuantity(productQuantities.get(productId));
-			double totalPrice = newTicketProduct.getPrice() * (1 - newTicketProduct.getDiscountPercentage()/100.0) * newTicketProduct.getQuantity();
-			newTicketProduct.setTotalPrice((long)totalPrice);
-			
-			ticketProductMap.put(newTicketProduct, foundProduct);
-			totalAmount += totalPrice;
+		if(productIds != null) {
+			for(String productId : productIds) {
+				Product foundProduct = this.productDAO.getProductById(Long.parseLong(productId));
+				foundProduct.setStock(foundProduct.getStock() - productQuantities.get(productId));
+				
+				TicketProduct newTicketProduct = new TicketProduct();
+				newTicketProduct.setTicketId(newTicket.getTicketId());
+				newTicketProduct.setProductId(foundProduct.getProductId());
+				newTicketProduct.setPrice(foundProduct.getPrice());
+				newTicketProduct.setDiscountPercentage(foundProduct.getDiscountPercentage());
+				newTicketProduct.setQuantity(productQuantities.get(productId));
+				double totalPrice = newTicketProduct.getPrice() * (1 - newTicketProduct.getDiscountPercentage()/100.0) * newTicketProduct.getQuantity();
+				newTicketProduct.setTotalPrice((long)totalPrice);
+				
+				ticketProductMap.put(newTicketProduct, foundProduct);
+				totalAmount += totalPrice;
+			}
 		}
 		
 		newTicket.setTotalAmount((long)totalAmount);

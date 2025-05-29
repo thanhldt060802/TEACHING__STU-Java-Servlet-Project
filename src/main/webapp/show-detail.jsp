@@ -47,7 +47,7 @@
 				<%
 				for(Seat seat : seatList) {
 				%>
-				<input type="checkbox" class="seats-choosen" value="<%=seat.getSeatId() %> <%= seat.getAvailable() ? "" : "disabled" %>"><label><%=seat.getSeatNumber() %></label>&emsp;
+				<input type="checkbox" class="seats-choosen" value="<%=seat.getSeatId() %>" <%= seat.getAvailable() ? "" : "disabled" %>><label><%=seat.getSeatNumber() %></label>&emsp;
 				<%
 				}
 				%>

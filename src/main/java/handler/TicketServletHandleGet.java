@@ -50,11 +50,11 @@ public class TicketServletHandleGet {
 		
 		Map<Long, String> ticketIdMovieNameMap = ticketList.stream()
 				.collect(Collectors.toMap((ticket) -> ticket.getTicketId(), (ticket) -> this.movieDAO.getMovieById(ticket.getMovieId()).getTitle()));
-		request.setAttribute("showIdMovieNameMap", ticketIdMovieNameMap);
+		request.setAttribute("ticketIdMovieNameMap", ticketIdMovieNameMap);
 		
 		Map<Long, String> ticketIdTheaterNameMap = ticketList.stream()
 				.collect(Collectors.toMap((ticket) -> ticket.getTicketId(), (ticket) -> this.theaterDAO.getTheaterById(ticket.getTheaterId()).getName()));
-		request.setAttribute("showIdTheaterNameMap", ticketIdTheaterNameMap);
+		request.setAttribute("ticketIdTheaterNameMap", ticketIdTheaterNameMap);
 
 		request.getRequestDispatcher("./table-ticket.jsp").forward(request, response);
 	}
@@ -116,11 +116,11 @@ public class TicketServletHandleGet {
 		
 		Map<Long, String> ticketIdMovieNameMap = ticketList.stream()
 				.collect(Collectors.toMap((ticket) -> ticket.getTicketId(), (ticket) -> this.movieDAO.getMovieById(ticket.getMovieId()).getTitle()));
-		request.setAttribute("showIdMovieNameMap", ticketIdMovieNameMap);
+		request.setAttribute("ticketIdMovieNameMap", ticketIdMovieNameMap);
 		
 		Map<Long, String> ticketIdTheaterNameMap = ticketList.stream()
 				.collect(Collectors.toMap((ticket) -> ticket.getTicketId(), (ticket) -> this.theaterDAO.getTheaterById(ticket.getTheaterId()).getName()));
-		request.setAttribute("showIdTheaterNameMap", ticketIdTheaterNameMap);
+		request.setAttribute("ticketIdTheaterNameMap", ticketIdTheaterNameMap);
 
 		request.getRequestDispatcher("./my-tickets.jsp").forward(request, response);
 	}

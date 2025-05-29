@@ -24,7 +24,7 @@ public class TicketDAO {
 	private ProductDAO productDAO;
 	
 	public TicketDAO() {
-		this.ticketProductDAO = new TicketProductDAO();
+		this.ticketSeatDAO = new TicketSeatDAO();
 		this.seatDAO = new SeatDAO();
 		this.ticketProductDAO = new TicketProductDAO();
 		this.productDAO = new ProductDAO();
@@ -66,6 +66,7 @@ public class TicketDAO {
 		Connection connection = MySQLDB.getConnection();
 		try {
 			PreparedStatement statementGetAllTicketsByUserId = connection.prepareStatement(sqlGetAllTicketsByUserId);
+			statementGetAllTicketsByUserId.setLong(1, userId);
 			
 			ResultSet rsGetAllTicketsByUserId = statementGetAllTicketsByUserId.executeQuery();
 			while (rsGetAllTicketsByUserId.next()) {
@@ -96,6 +97,7 @@ public class TicketDAO {
 		Connection connection = MySQLDB.getConnection();
 		try {
 			PreparedStatement statementGetTicketById = connection.prepareStatement(sqlGetTicketById);
+			statementGetTicketById.setLong(1, id);
 			
 			ResultSet rsGetTicketById = statementGetTicketById.executeQuery();
 			while (rsGetTicketById.next()) {
@@ -120,7 +122,7 @@ public class TicketDAO {
 	}
 	
 	public boolean createTicket(Ticket newTicket, Map<TicketSeat, Seat> ticketSeatMap, Map<TicketProduct, Product> ticketProductMap, Connection refConnection) {
-		String sqlInsertTicket = "INSERT INTO tickets (ticket_id, user_id, movie_id, theater_id, total_amount, cre ated_at) VALUES (?, ?, ?, ?, ?, ?)";
+		String sqlInsertTicket = "INSERT INTO tickets (ticket_id, user_id, movie_id, theater_id, total_amount, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 		Connection connection = refConnection;
 		if(connection == null) {
 			connection = MySQLDB.getConnection();

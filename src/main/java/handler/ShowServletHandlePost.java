@@ -34,6 +34,7 @@ public class ShowServletHandlePost {
 		Integer discountPercentage = Integer.parseInt(request.getParameter("discountPercentageInput"));
 		
 		Show newShow = new Show();
+		newShow.setShowId(System.nanoTime());
 		newShow.setMovieId(movieId);
 		newShow.setTheaterId(theaterId);
 		newShow.setStartAt(startAt);

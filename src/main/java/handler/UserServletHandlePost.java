@@ -210,7 +210,7 @@ public class UserServletHandlePost {
 		String password = "app_pass";
 		String toEmail = foundUser.getEmail();
 		String subject = "RETRIEVE PASSWORD";
-		String body = "Your new passowrd: " + foundUser.getPassword();;
+		String body = "Your new password: " + foundUser.getPassword();;
 		this.sendEmail(fromEmail, password, toEmail, subject, body);
 		
 		System.out.println("Check your email");
